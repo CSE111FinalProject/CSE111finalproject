@@ -1,0 +1,55 @@
+/*----------------------------------------------
+CSS Settings For HTML Div ExactCenter
+------------------------------------------------*/
+span {
+    
+    color:red
+    }
+    h2
+    
+    {
+        text-align:center;
+        border-radius:10px 10px 0 0;
+        margin:-10px -40px;
+        padding:15px
+    }
+    hr
+
+    {
+        border:0;
+        border-bottom:1px solid;
+        margin:10px -40px;
+        margin-bottom:30px
+    }
+    #profile
+    {
+        width: 98%;
+        background-color:#f40000;
+        color:#fff;
+        border:2px white;
+        padding:10px;
+        font-size:20px;
+        cursor:pointer;
+        border-radius:5px;
+    }
+   
+    
+    #profile
+    {
+        float:right;
+        padding:10px;
+        /* border:dashed 1px rgb(12, 246, 129); */
+        
+        
+    } 
+    a
+    {
+        text-decoration:wavy;
+        color:#ffffff;
+        float:right;
+    }
+    i 
+    
+    {
+        color:#ffffff;
+    }
