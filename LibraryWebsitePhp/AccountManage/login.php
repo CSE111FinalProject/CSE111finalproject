@@ -27,7 +27,7 @@
 
             //fetching the query
             list($id,$username,$password) = $result->fetchArray(PDO::FETCH_NUM);
-
+            // $fetch = $result->fetchArray();
             //making sure that the query has value
             if($username && $password){ //fetching the contents of the row {
                 $_SESSION['login_user'] = $username; // Initializing Session
