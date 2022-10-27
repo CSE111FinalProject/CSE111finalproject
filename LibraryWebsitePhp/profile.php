@@ -1,17 +1,11 @@
 <?php
 // include('session.php');
 require_once'session.php';
+// include('search_data.php');
 	if(!isset($_SESSION['login_user'])){
 		header("location: index.php"); // Redirecting To Home Page
 	}
-	//This table will be the searching books. The implementation will change
-	$db = new SQLite3('database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
-	$db->enableExceptions(true);
-	$db->exec('BEGIN');
-	$statement = $db->prepare('SELECT * FROM "login"');
-	// SQL query to select data from database
-	$result = $statement->execute();
-	$db->exec('COMMIT');
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,9 +44,22 @@ require_once'session.php';
 		<hr style="border-top:1px dotted #ccc;"/>
 		<form method = "POST" action ="">
 			<div class = "form-group">
-				<label>Searching in the Database</label>
-				<input id = "search" name="startSearch" type = "text" required="required">
-				<input id = "submitSearch" name="subSearch" type="submit">
+				<label>Searching in the Database Example - Not yet implemented</label>
+				<div class="form-group">
+					<label> Search by city</label>
+					<input id = "search" name="citySearch" type = "text" >
+				</div>
+				<div class="form-group">
+					<label>Search by Nation</label>
+					<input id = "search" name="NationSearch" type = "text">
+				</div>
+				<div class="form-group">
+					<label>Book Name</label>
+					<input id = "search" name="bookSearch" type = "text" required="required">
+				</div>
+		
+				<!-- <input id = "submitSearch" name="subSearch" type="submit"> -->
+				<button class="btn btn-success" name="search"><span class="glyphicon glyphicon-search"></span> Search</button>
 			</div>
 		</form>
 		<?php 
@@ -65,28 +72,14 @@ require_once'session.php';
 					<th>Id</th>
 					<th>Username</th>
 					<th>Password</th>
-					<!-- <th>GFG Articles</th> -->
+					
 				</tr>
 			</thead>
-			<!-- PHP CODE TO FETCH DATA FROM ROWS -->
-			<?php
-				// LOOP TILL END OF DATA
-				while($rows=$result->fetchArray(PDO::FETCH_NUM))
-				{
-			?>
-			<tr>
-				<!-- FETCHING DATA FROM EACH
-					ROW OF EVERY COLUMN -->
-					<td><?php echo $rows['user_id'];?></td>
-					<td><?php echo $rows['username'];?></td>
-					<td><?php echo $rows['password'];?></td>
-				
-			</tr>
-			<?php
-				}
-                $db->close();
-			?>
-			<?php ?>
+			
+			<tbody>
+				<!-- when search is pressed, data will show -->
+				<?php include 'search_data.php' ?>
+			</tbody>
 
 		</table>
 		</div>

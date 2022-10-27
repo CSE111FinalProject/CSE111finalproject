@@ -192,3 +192,23 @@ $db->close();
 		}
 	</style>
 </head>
+
+
+<?php
+				// LOOP TILL END OF DATA
+				while($rows=$result->fetchArray(PDO::FETCH_NUM))
+				{
+			?>
+			<tr>
+				<!-- FETCHING DATA FROM EACH
+					ROW OF EVERY COLUMN -->
+					<td><?php echo $rows['user_id'];?></td>
+					<td><?php echo $rows['username'];?></td>
+					<td><?php echo $rows['password'];?></td>
+				
+			</tr>
+			<?php
+				}
+                $db->close();
+			?>
+			<?php ?>
