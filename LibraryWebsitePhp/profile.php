@@ -57,24 +57,28 @@ require_once'session.php';
 					<label>Book Name</label>
 					<input id = "search" name="bookSearch" type = "text" required="required">
 				</div>
+				<div class ="form-group">
+					<label>Library name</label>
+					<input id = "search" name = "librarySearch" type = "text">
+				</div>
 		
 				<!-- <input id = "submitSearch" name="subSearch" type="submit"> -->
 				<button class="btn btn-success" name="search"><span class="glyphicon glyphicon-search"></span> Search</button>
 			</div>
 		</form>
 		<?php 
-			$db = new SQLite3("database/librarydatabase.sqlite") or die("Can not open database");
-			$db->close();
+			// $db = new SQLite3("database/librarydatabase.sqlite") or die("Can not open database");
+			// $db->close();
 		?>
 		<table class="table table-bordered">
-			<thead class="alert-info">
+			<!-- <thead class="alert-info">
 				<tr>
 					<th>Id</th>
 					<th>Username</th>
 					<th>Password</th>
 					
 				</tr>
-			</thead>
+			</thead> -->
 			
 			<tbody>
 				<!-- when search is pressed, data will show -->
