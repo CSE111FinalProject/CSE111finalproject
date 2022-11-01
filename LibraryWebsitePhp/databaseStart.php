@@ -22,23 +22,31 @@
     // $db->exec('COMMIT');
 
     //Modify these with relevant column attribute and also do insert
-    $query="CREATE TABLE IF NOT EXISTS `Borrow`('borrow_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'username' TEXT NOT NULL, 'BookName' TEXT NOT NULL,'BookType' TEXT NOT NULL)";
+    $query="CREATE TABLE IF NOT EXISTS `loans`('l_loanid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'l_cardid' INTEGER NOT NULL, 'l_bookid' INTEGER NOT NULL,'l_movieid' INTEGER NOT NULL, 'l_loandate' DATE, 'l_loanstatus' TEXT NOT NULL, 'l_loanlength' INTEGER NOT NULL, 'l_fees' INTEGER NOT NULL, 'l_feestatus' TEXT NOT NULL, 'l_comment' TEXT NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
     
-    $query="CREATE TABLE IF NOT EXISTS `Books`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    $query="CREATE TABLE IF NOT EXISTS `books`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
      'b_isbn' TEXT NOT NULL, 'b_title' TEXT NOT NULL,'b_year' INTEGER NOT NULL, 'b_genre' TEXT NOT NULL, 'b_libid' INTEGER NOT NULL, 'b_condition' TEXT NOT NULL, 'b_comment' TEXT NOT NULL )";
     $db->exec($query)or die("Failed to create table! ");
     
-    $query="CREATE TABLE IF NOT EXISTS `Movies`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-     'b_isbn' TEXT NOT NULL, 'b_title' TEXT NOT NULL,'b_year' INTEGER NOT NULL, 'b_genre' TEXT NOT NULL, 'b_libid' INTEGER NOT NULL, 'b_condition' TEXT NOT NULL, 'b_comment' TEXT NOT NULL )";
+    $query="CREATE TABLE IF NOT EXISTS `movies`('m_movieid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'm_title' TEXT NOT NULL,'m_length' INTEGER NOT NULL, 'm_star' TEXT NOT NULL, 'm_genre' TEXT NOT NULL, 'm_year' TEXT NOT NULL, 'm_libid' TEXT NOT NULL, 'm_condition' TEXT NOT NULL, 'm_comment' TEXT NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
     
-    $query="CREATE TABLE IF NOT EXISTS `Library`('library_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'libraryname' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, 'CityName' TEXT NOT NULL, 'NatioName' TEXT NOT NULL)";
+    $query="CREATE TABLE IF NOT EXISTS `library`('lib_libid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'lib_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,  'lib_address' TEXT NOT NULL,'lib_phone' INTEGER NOT NULL, 'lib_cityid' INTEGER NOT NULL, 'lib_commend' TEXT NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
     
-    $query="CREATE TABLE IF NOT EXISTS `State`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-     'b_isbn' TEXT NOT NULL, 'b_title' TEXT NOT NULL,'b_year' INTEGER NOT NULL, 'b_genre' TEXT NOT NULL, 'b_libid' INTEGER NOT NULL, 'b_condition' TEXT NOT NULL, 'b_comment' TEXT NOT NULL )";
+    $query="CREATE TABLE IF NOT EXISTS `state`('s_stateid' INTEGER PRIMARY KEY AUTOINCREMENT,
+     's_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, 's_comment' TEXT NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
+    $csvFilepath = "csv/State.csv";
+    $file = fopen($csvFilepath, "r");
+    while(($row = fgetcsv($file))!== FALSE){
+        $statement = $db->prepare('INSERT INTO "state" ("s_name", "s_comment") VALUES (?,?)');
+        $statement->bindParam(1,$row[0]);
+        $statement->bindParam(2,$row[1]);
+        $statement->execute();
+    }
     //etc
     $db->close();
     
