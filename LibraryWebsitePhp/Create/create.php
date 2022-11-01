@@ -7,21 +7,37 @@
         
             $username = $_POST['createdUser'];
             $password = $_POST['newPassword'];
-            
-            
+            $homeAdress = $_POST['newAddress1'];
+            $city = $_POST['newAddress2'];
+            $phoneNumber = $_POST['newPhone'];
             $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             $db->enableExceptions(true);
             $db->exec('BEGIN');
-            $statement = $db->prepare('INSERT INTO "login" ("username","password")VALUES (?,?) ');
+            $statement = $db->prepare('SELECT "city_cityid" FROM "City" WHERE "city_name" = ?');
+            $statement->bindValue(1, $city);
+            $result = $statement->execute();
+            list($queryCity) = $result->fetchArray(PDO::FETCH_NUM);
+
+            $db->exec('COMMIT');
+            $db->close();
+            $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+            $db->enableExceptions(true);
+            $db->exec('BEGIN');
+            $statement = $db->prepare('INSERT INTO "cardholder" ("c_username","c_password","c_address","c_cityid","c_phone","c_acctbal","c_comment")VALUES (?,?,?,?,?,?,?)');
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $password);
+            $statement->bindValue(3, $homeAdress);
+            $statement->bindValue(4,$queryCity);
+            $statement->bindValue(5, $phoneNumber);
+            $statement->bindValue(6, 0);
+            $statement->bindValue(7,"No comment");
             $result = $statement->execute();
             $db->exec('COMMIT');
             $db->close();
             $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             $db->enableExceptions(true);
             $db->exec('BEGIN');
-            $statement = $db->prepare('SELECT * FROM "login" WHERE "username" = ? AND "password" = ?');
+            $statement = $db->prepare('SELECT "c_cardid","c_username" ,"c_password" FROM "cardholder" WHERE "c_username" = ? AND "c_password" = ?');
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $password);
             $result = $statement->execute();

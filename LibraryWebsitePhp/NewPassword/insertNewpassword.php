@@ -8,7 +8,7 @@
         $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
         $db->enableExceptions(true);
         $db->exec('BEGIN');
-        $statement = $db->prepare('SELECT * FROM "login" WHERE "username" = ? AND "password" = ?');
+        $statement = $db->prepare('SELECT "c_cardid","c_username","c_password" FROM "cardholder" WHERE "c_username" = ? AND "c_password" = ?');
         $statement->bindValue(1, $username);
         $statement->bindValue(2, $oldpassword);
         $result = $statement->execute();
@@ -20,7 +20,7 @@
             $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             $db->enableExceptions(true);
             $db->exec('BEGIN');
-            $statement = $db->prepare('UPDATE "login" SET "password" = ? WHERE "password" = ? AND "username" = ?');
+            $statement = $db->prepare('UPDATE "cardholder" SET "c_password" = ? WHERE "c_password" = ? AND "c_username" = ?');
             $statement->bindValue(1, $newpassword);
             $statement->bindValue(2,$oldpassword);
             $statement->bindValue(3,$username);
@@ -30,7 +30,7 @@
             $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             $db->enableExceptions(true);
             $db->exec('BEGIN');
-            $statement = $db->prepare('SELECT * FROM "login" WHERE "username" = ? AND "password" = ?');
+            $statement = $db->prepare('SELECT "c_cardid","c_username","c_password" FROM "cardholder" WHERE "c_username" = ? AND "c_password" = ?');
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $newpassword);
             $result = $statement->execute();

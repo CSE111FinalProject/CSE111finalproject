@@ -13,7 +13,7 @@
             $db->exec('BEGIN');
 
             //preparing for statement
-            $statement = $db->prepare('SELECT * FROM "login" WHERE "username" = ? AND "password" = ?');
+            $statement = $db->prepare('SELECT "c_cardid","c_username", "c_password" FROM "cardholder" WHERE "c_username" = ? AND "c_password" = ?');
 
             //binding values for the question mark
             $statement->bindValue(1, $username);

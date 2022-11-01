@@ -7,7 +7,7 @@
     $user_check = $_SESSION['login_user'];
     
     // SQL Query To Fetch Complete Information Of User
-    $statement = $db->prepare('SELECT username FROM "login" WHERE "username" = ?');
+    $statement = $db->prepare('SELECT "c_username" FROM "cardholder" WHERE "c_username" = ?');
     $statement->bindValue(1, $user_check);
     
     //fetch for row information of user

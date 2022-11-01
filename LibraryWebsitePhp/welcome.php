@@ -212,3 +212,18 @@ $db->close();
                 $db->close();
 			?>
 			<?php ?>
+
+ <?php 
+                                $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+                                $db->enableExceptions(true);
+                                $db->exec('BEGIN');
+                                $statement = $db->prepare('SELECT "city_name" FROM "City"');
+                                $result = $statement->execute();                               
+                                $db->exec('COMMIT');
+                                while($rows=$result->fetchArray(PDO::FETCH_NUM)){
+                            ?>
+                                <option value=<?php echo $rows['city_name'];?>><?php echo $rows['city_name'];?></option>
+                                <?php
+                                }
+                                $db->close();
+                            ?> 

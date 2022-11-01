@@ -1,11 +1,11 @@
 <?php 
 
 include('create.php'); 
-// if (isset($_POST['create'])) {
+if (isset($_POST['create'])) {
     if(isset($_SESSION['login_user'])){
         header("location: ../profile.php"); // Redirecting To Profile Page
         }
-    // }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +39,22 @@ include('create.php');
                         <label>Password :</label>
                         <input id="createPass" name="newPassword" placeholder="**********" type="password" required="required">
                     </div> 
+                    <div class="form-group">
+                        <label>Address :</label>
+                        <input id="createAddress1" name="newAddress1" placeholder="Home Adreess" type="text" required="required">
+                        <!-- <input id="createAddress2" name="newAddress2" placeholder="City" type="text" required="required"> -->
+                        <select name="newAddress2" id="createAddress2"> 
+                            <option value="Merced">Merced</option>
+                            <option value="Los Angeles">Los Angeles</option>
+                            <option value="New York">New York</option>
+                            <option value="Seatle">Seatle</option>
+                            <option value="Sacramento">Sacramento</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number :</label>
+                        <input id="createPhone" name="newPhone" placeholder="***-***-****" type="tel" required="required">
+                    </div>
                     <div class="form-group">
                         <input name="createSubmit" type="submit" value="Create Account">     
                     </div>

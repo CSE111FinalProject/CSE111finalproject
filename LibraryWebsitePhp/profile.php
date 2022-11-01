@@ -33,10 +33,13 @@ require_once'session.php';
 		
 		<input name="logout" type="submit" value=" Log Out ">
 		</div>
+		
 		<!-- <b id="logout"><a href="logout.php">Log Out</a></b> -->
 		
 		</form>
+		
 		<br />
+		
 		<div class="col-md-3"></div>
 		<div class="col-md-6 well">
 		<h3 class="text-primary">Showing Library Accounnt</h3>
@@ -70,6 +73,10 @@ require_once'session.php';
 			// $db = new SQLite3("database/librarydatabase.sqlite") or die("Can not open database");
 			// $db->close();
 		?>
+		
+		</div>
+		</center>
+<!-- <input name="logout" type="submit" value="Log Out " href="logout.php"> -->
 		<table class="table table-bordered">
 			<!-- <thead class="alert-info">
 				<tr>
@@ -86,9 +93,6 @@ require_once'session.php';
 			</tbody>
 
 		</table>
-		</div>
-		</center>
-<!-- <input name="logout" type="submit" value="Log Out " href="logout.php"> -->
 	</div>
 	
 
