@@ -1,7 +1,7 @@
 <?php
     include('AccountManage/login.php');
-    
-    $db = new SQLite3('database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+    include('accessDatabase.php');
+    $db = new SQLite3('database/'. $databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
   
     // Storing Session
     $user_check = $_SESSION['login_user'];

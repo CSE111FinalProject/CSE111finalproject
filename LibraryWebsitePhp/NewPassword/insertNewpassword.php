@@ -1,11 +1,12 @@
 <?php
     session_start(); // Starting Session
     $error = ''; // Variable To Store Error Message
+    include('../accessDatabase.php');
     if(isset($_POST['newpassSubmit'])){
         $username = $_POST['username'];
         $oldpassword = $_POST['OldPassword'];
         $newpassword = $_POST['NewPassword'];
-        $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+        $db = new SQLite3('../database/'. $databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
         $db->enableExceptions(true);
         $db->exec('BEGIN');
         $statement = $db->prepare('SELECT "c_cardid","c_username","c_password" FROM "cardholder" WHERE "c_username" = ? AND "c_password" = ?');
@@ -15,10 +16,10 @@
         $db->exec('COMMIT');
         
         list($queryid,$queryusername,$querypassword) = $result->fetchArray(PDO::FETCH_NUM);
-        $db->close();
+        // $db->close();
         if($queryusername == $username && $querypassword == $oldpassword){
-            $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
-            $db->enableExceptions(true);
+            // $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+            // $db->enableExceptions(true);
             $db->exec('BEGIN');
             $statement = $db->prepare('UPDATE "cardholder" SET "c_password" = ? WHERE "c_password" = ? AND "c_username" = ?');
             $statement->bindValue(1, $newpassword);
@@ -26,9 +27,9 @@
             $statement->bindValue(3,$username);
             $result = $statement->execute();
             $db->exec('COMMIT');
-            $db->close();
-            $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
-            $db->enableExceptions(true);
+            // $db->close();
+            // $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+            // $db->enableExceptions(true);
             $db->exec('BEGIN');
             $statement = $db->prepare('SELECT "c_cardid","c_username","c_password" FROM "cardholder" WHERE "c_username" = ? AND "c_password" = ?');
             $statement->bindValue(1, $username);

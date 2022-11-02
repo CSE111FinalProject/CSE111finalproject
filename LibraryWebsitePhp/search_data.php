@@ -1,12 +1,13 @@
 <?php
     //This is where we would implement the query for our library function
+    include('accessDatabase.php');
     $error = '';
     if(isset($_POST['search'])){
         $searchNation = $_POST['NationSearch'];
         $searchCity = $_POST['citySearch'];
         $searchBook = $_POST['bookSearch'];
         $searchLibrary = $_POST['librarySearch'];
-        $db = new SQLite3('database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+        $db = new SQLite3('database/'. $databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
         $db->enableExceptions(true);
         
         //PLEASE KEEP THIS TEMPLATE to add more if condition

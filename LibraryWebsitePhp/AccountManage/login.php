@@ -1,6 +1,7 @@
 <?php
     session_start(); // Starting Session
     $error = ''; // Variable To Store Error Message
+    
     if (isset($_POST['submit1'])) {
         
             //Getting information of user input of their username and password when loging in
@@ -8,7 +9,7 @@
             $password = $_POST['password'];
 
             //getting database open
-            $db = new SQLite3('database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+            $db = new SQLite3('database/'. $databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             $db->enableExceptions(true);
             $db->exec('BEGIN');
 

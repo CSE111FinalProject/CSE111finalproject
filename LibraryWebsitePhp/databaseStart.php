@@ -1,5 +1,9 @@
+
 <?php
-    $db = new SQLite3('database/librarydatabase.sqlite') or die("Unable to open database!");
+    include('accessDatabase.php');
+    
+    $db = new SQLite3('database/'. $databaseName) or die("Unable to open database!");
+
     //example of query when creating database
     $query="CREATE TABLE IF NOT EXISTS `cardholder`('c_cardid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'c_username' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, 'c_password' TEXT NOT NULL, 'c_address' TEXT NOT NULL, 'c_cityid' INTEGER NOT NULL, 'c_phone' INTEGER NOT NULL, 'c_acctbal' INTEGER, 'c_comment' TEXT)";
     $db->exec($query)or die("Failed to create table! ");//Do not touch
@@ -35,12 +39,13 @@
     
     $query="CREATE TABLE IF NOT EXISTS `library`('lib_libid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'lib_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,  'lib_address' TEXT NOT NULL,'lib_phone' INTEGER NOT NULL, 'lib_cityid' INTEGER NOT NULL, 'lib_commend' TEXT NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
+    $csvFilepath = "csv/";
     
     $query="CREATE TABLE IF NOT EXISTS `state`('s_stateid' INTEGER PRIMARY KEY AUTOINCREMENT,
      's_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, 's_comment' TEXT NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
     $csvFilepath = "csv/State.csv";
-    $file = fopen($csvFilepath, "r");
+    $file = fopen($csvFilepath, "r") or die("Unable to open csv file");
     while(($row = fgetcsv($file))!== FALSE){
         $statement = $db->prepare('INSERT INTO "state" ("s_name", "s_comment") VALUES (?,?)');
         $statement->bindParam(1,$row[0]);
