@@ -1,7 +1,7 @@
 <?php 
 
 include('create.php'); 
-include('accessDatabase.php');
+include('../accessDatabase.php');
 if (isset($_POST['create'])) {
     if(isset($_SESSION['login_user'])){
         header("location: ../profile.php"); // Redirecting To Profile Page
@@ -51,8 +51,23 @@ if (isset($_POST['create'])) {
                             <option value="Seatle">Seatle</option>
                             <option value="Sacramento">Sacramento</option> -->
                             <?php
+                                $db = new SQLite3('../database/'.$databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+                                $db->exec('BEGIN');
+                                $statement  = $db->prepare('SELECT "city_name" FROM "City"');
+                                $result = $statement->execute();
+                                $db->exec('COMMIT');
                                 
+                                while($rows=$result->fetchArray()){
+                                    ?>
+                                        
+                                        <option value=<?php echo $rows['city_name'];?>><?php echo $rows['city_name'];?></option>
+                                        
+                                        <?php
+                                        }
+                                 
                             ?>
+                            
+                            <option name="newAddress2"></option>
                         </select>
                     </div>
                     <div class="form-group">

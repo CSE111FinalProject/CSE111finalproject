@@ -13,9 +13,9 @@
     $db->exec($query)or die("Failed to create table! ");
     $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Merced",1,"No comment")');
     $result = $statement->execute();
-    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Los Angeles",2,"No comment")');
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("LosAngeles",2,"No comment")');
     $result = $statement->execute();
-    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("New York",3,"No comment")');
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("NewYork",3,"No comment")');
     $result = $statement->execute();
     $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Seatle",4,"No comment")');
     $result = $statement->execute();

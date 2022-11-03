@@ -16,8 +16,8 @@
             $statement = $db->prepare('SELECT "city_cityid" FROM "City" WHERE "city_name" = ?');
             $statement->bindValue(1, $city);
             $result = $statement->execute();
-            list($queryCity) = $result->fetchArray(PDO::FETCH_NUM);
-
+            // list($queryCity) = $result->fetchArray(PDO::FETCH_NUM);
+            $ROW = $result->fetchArray();
             $db->exec('COMMIT');
             // $db->close();
             // $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
@@ -27,7 +27,7 @@
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $password);
             $statement->bindValue(3, $homeAdress);
-            $statement->bindValue(4,$queryCity);
+            $statement->bindValue(4,$ROW['city_cityid']);
             $statement->bindValue(5, $phoneNumber);
             $statement->bindValue(6, 0);
             $statement->bindValue(7,"No comment");
