@@ -22,6 +22,7 @@
             // $db->close();
             // $db = new SQLite3('../database/librarydatabase.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             // $db->enableExceptions(true);
+            echo $city;
             $db->exec('BEGIN');
             $statement = $db->prepare('INSERT INTO "cardholder" ("c_username","c_password","c_address","c_cityid","c_phone","c_acctbal","c_comment")VALUES (?,?,?,?,?,?,?)');
             $statement->bindValue(1, $username);

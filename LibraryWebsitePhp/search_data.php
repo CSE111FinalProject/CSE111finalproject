@@ -66,7 +66,7 @@
              }
         }
         else{
-            //search book by all option
+            //search book by all option or just by isbn
             $db->exec('BEGIN');
             $statement = $db->prepare('SELECT * FROM "cardholder"');
             $result = $statement->execute() or die("Failed to fetch row!");

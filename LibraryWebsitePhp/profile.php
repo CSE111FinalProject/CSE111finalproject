@@ -49,19 +49,23 @@ require_once'session.php';
 			<div class = "form-group">
 				<label>Searching in the Database Example - Not yet implemented</label>
 				<div class="form-group">
-					<label> Search by city</label>
+					<label> Search by city: </label>
 					<input id = "search" name="citySearch" type = "text" >
 				</div>
 				<div class="form-group">
-					<label>Search by Nation</label>
+					<label>Search by Nation: </label>
 					<input id = "search" name="NationSearch" type = "text">
 				</div>
 				<div class="form-group">
-					<label>Book Name</label>
+					<label>Book Name: </label>
 					<input id = "search" name="bookSearch" type = "text" required="required">
 				</div>
 				<div class ="form-group">
-					<label>Library name</label>
+					<label>Isbn: </label>
+					<input id = "search" name = "isbnSearch" type = "text">
+				</div>
+				<div class ="form-group">
+					<label>Library name: </label>
 					<input id = "search" name = "librarySearch" type = "text">
 				</div>
 		

@@ -58,14 +58,12 @@ if (isset($_POST['create'])) {
                                 $db->exec('COMMIT');
                                 
                                 while($rows=$result->fetchArray()){
+                                    // echo $rows['city_name'];
+                                    echo '<option value="'.$rows['city_name'].'">'.$rows['city_name'].'</option>';
+                                }
                                     ?>
+
                                         
-                                        <option value=<?php echo $rows['city_name'];?>><?php echo $rows['city_name'];?></option>
-                                        
-                                        <?php
-                                        }
-                                 
-                            ?>
                             
                             <option name="newAddress2"></option>
                         </select>
