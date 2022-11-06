@@ -20,7 +20,7 @@
         if($searchBook && $searchCity && !$searchNation){
             //fetch book based on city location
             //We can just use if statements or create another file for each functionality and code include('file directory')
-            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "cardholder", "City","library" WHERE "city_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "b_libid" AND "b_title" LIKE "%".?."%"');
+            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "City","library","Libbooks","books" WHERE "city_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "libbooks_libid" AND "libbooks_bookid" ="b_bookid" AND "b_title" LIKE "%".?."%"');
             // $statement->bindValue(1, $searchCity);
             // $statement->bindValue(1, $searchBook);
             $db->exec('BEGIN');
@@ -49,7 +49,7 @@
         else if($searchBook && $searchLibrary && !$searchCity && !$searchNation){
             //search book by library
             $db->exec('BEGIN');
-            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "cardholder", "City","library" WHERE "lib_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "b_libid" AND "b_title" LIKE "%".?."%"');
+            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "City","library" WHERE "lib_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "libbooks_libid" AND "libbooks_bookid" = "b_bookid" AND "b_title" LIKE "%".?."%"');
             // $statement->bindValue(1, $searchLibrary);
             // $statement->bindValue(1, $searchBook);
             $statement = $db->prepare('SELECT * FROM "cardholder"');
@@ -79,9 +79,8 @@
         }
         else{
             //search book by all option
-            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "cardholder", "City","library" WHERE "city_cityid" = "lib_cityid" AND "lib_libid" = "b_libid" AND "b_title" LIKE "%".?."%"');
-            // $statement->bindValue(1, $searchLibrary);
-            // $statement->bindValue(1, $searchBook);
+            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "City","library", "Libbooks" WHERE "city_cityid" = "lib_cityid" AND "lib_libid" = "libbooks_libid"');
+            
             $db->exec('BEGIN');
             $statement = $db->prepare('SELECT * FROM "cardholder"');
             $result = $statement->execute() or die("Failed to fetch row!");
