@@ -226,4 +226,147 @@ $db->close();
                                 <?php
                                 }
                                 $db->close();
-                            ?> 
+                            ?>
+							
+							
+
+
+
+							<?php
+
+require_once 'vendor/autoload.php';
+
+use leoshtika\libs\Pagination;
+use leoshtika\libs\Sqlite;
+use leoshtika\libs\UserFaker;
+
+$sqliteFile = 'demo.sqlite';
+
+// Create a new sqlite db if not exists and load some dummy data. 
+// After the database is created, you don't need this line of code anymore
+UserFaker::create($sqliteFile, 120);
+
+$dbh = Sqlite::connect($sqliteFile);
+
+// Get the total number of records
+$totalRecords = $dbh->query('SELECT count(*) FROM user')->fetch(PDO::FETCH_COLUMN);
+
+// Instantiate the Pagination
+$pagination = new Pagination($_GET['page'], $totalRecords, 10);
+
+// Get records using the pagination
+$sth = $dbh->prepare('SELECT * FROM user LIMIT :offset, :records');
+$sth->bindValue(':offset', $pagination->offset(), PDO::PARAM_INT);
+$sth->bindValue(':records', $pagination->getRecordsPerPage(), PDO::PARAM_INT);
+$sth->execute();
+$users = $sth->fetchAll(PDO::FETCH_OBJ);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pagination</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body class="container-fluid">
+    
+    <h1>Pagination!</h1>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
+        </tr>
+        <?php foreach ($users as $user) : ?>
+            <tr>
+                <td><?php echo $user->id; ?></td>
+                <td><?php echo $user->name; ?></td>
+                <td><?php echo $user->email; ?></td>
+                <td><?php echo $user->address; ?></td>
+                <td><?php echo $user->phone; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <?php echo $pagination->nav(); ?>
+</body>
+</html>
+
+
+
+<?php
+    include('accessDatabase.php');
+    
+    $db = new SQLite3('database/'. $databaseName) or die("Unable to open database!");
+
+    //example of query when creating database
+    $query="CREATE TABLE IF NOT EXISTS `cardholder`('c_cardid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'c_username' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, 'c_password' TEXT NOT NULL, 'c_address' TEXT NOT NULL, 'c_cityid' INTEGER NOT NULL, 'c_phone' INTEGER NOT NULL, 'c_acctbal' INTEGER, 'c_comment' TEXT)";
+    $db->exec($query)or die("Failed to create table! ");//Do not touch
+
+    //Example - //Do not touch
+    $query="CREATE TABLE IF NOT EXISTS `City`('city_cityid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'city_name' TEXT  NOT NULL UNIQUE ON CONFLICT IGNORE, 'city_stateid' INTEGER NOT NULL, 'city_comment' TEXT NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Merced",5,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Los Angeles",5,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("New York",32,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Seatle",37,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Sacramento",5,"No comment")');
+    $result = $statement->execute();
+    
+    // $db->exec($statement)or die("Failed to Insert");
+    // $db->exec('COMMIT');
+
+    //Modify these with relevant column attribute and also do insert
+    $query="CREATE TABLE IF NOT EXISTS `loans`('l_loanid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'l_cardid' INTEGER NOT NULL, 'l_bookid' INTEGER NOT NULL,'l_movieid' INTEGER NOT NULL, 'l_loandate' DATE, 'l_loanstatus' TEXT NOT NULL, 'l_loanlength' INTEGER NOT NULL, 'l_fees' INTEGER NOT NULL, 'l_feestatus' TEXT NOT NULL, 'l_comment' TEXT NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+    
+    $query="CREATE TABLE IF NOT EXISTS `books`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+     'b_isbn' TEXT NOT NULL, 'b_title' TEXT NOT NULL,'b_year' INTEGER NOT NULL, 'b_genre' TEXT NOT NULL, 'b_libid' INTEGER NOT NULL, 'b_condition' TEXT NOT NULL, 'b_comment' TEXT NOT NULL )";
+    $db->exec($query)or die("Failed to create table! ");
+    
+    $query="CREATE TABLE IF NOT EXISTS `movies`('m_movieid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'm_title' TEXT NOT NULL,'m_length' INTEGER NOT NULL, 'm_star' TEXT NOT NULL, 'm_genre' TEXT NOT NULL, 'm_year' TEXT NOT NULL, 'm_libid' TEXT NOT NULL, 'm_condition' TEXT NOT NULL, 'm_comment' TEXT NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+
+    $query="CREATE TABLE IF NOT EXISTS `Loanmovies`('Loanmovies_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'l_loanid' INTEGER NOT NULL,'m_movieid' INTEGER NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+
+    $query="CREATE TABLE IF NOT EXISTS `Loanbooks`('Loanbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'l_loanid' INTEGER NOT NULL,'b_bookid' INTEGER NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+    
+    $query="CREATE TABLE IF NOT EXISTS `library`('lib_libid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'lib_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,  'lib_address' TEXT NOT NULL,'lib_phone' INTEGER NOT NULL, 'lib_cityid' INTEGER NOT NULL, 'lib_commend' TEXT NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+    $csvFilepath = "csv/";
+
+    $query="CREATE TABLE IF NOT EXISTS `Libbooks`('libbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'lib_libid' INTEGER NOT NULL,'b_bookid' INTEGER NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+
+    $query="CREATE TABLE IF NOT EXISTS `Libmovies`('libbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'lib_libid' INTEGER NOT NULL,'m_movieid' INTEGER NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+    
+    $query="CREATE TABLE IF NOT EXISTS `state`('s_stateid' INTEGER PRIMARY KEY AUTOINCREMENT,
+     's_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE, 's_comment' TEXT NOT NULL)";
+    $db->exec($query)or die("Failed to create table! ");
+    $csvFilepath = "csv/State.csv";
+    $file = fopen($csvFilepath, "r") or die("Unable to open csv file");
+    while(($row = fgetcsv($file))!== FALSE){
+        $statement = $db->prepare('INSERT INTO "state" ("s_name", "s_comment") VALUES (?,?)');
+        $statement->bindParam(1,$row[0]);
+        $statement->bindParam(2,$row[1]);
+        $statement->execute();
+    }
+    //etc
+    $db->close();
+    
+?>

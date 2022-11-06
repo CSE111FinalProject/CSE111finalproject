@@ -1,5 +1,11 @@
 <?php
     //This is where we would implement the query for our library function
+    
+    require_once 'vendor/autoload.php';
+
+    use leoshtika\libs\Pagination;
+    use leoshtika\libs\Sqlite;
+    use leoshtika\libs\UserFaker;
     include('accessDatabase.php');
     $error = '';
     if(isset($_POST['search'])){
@@ -14,6 +20,9 @@
         if($searchBook && $searchCity && !$searchNation){
             //fetch book based on city location
             //We can just use if statements or create another file for each functionality and code include('file directory')
+            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "cardholder", "City","library" WHERE "city_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "b_libid" AND "b_title" LIKE "%".?."%"');
+            // $statement->bindValue(1, $searchCity);
+            // $statement->bindValue(1, $searchBook);
             $db->exec('BEGIN');
             $statement = $db->prepare('SELECT * FROM "cardholder"');
             $result = $statement->execute() or die("Failed to fetch row!");
@@ -40,6 +49,9 @@
         else if($searchBook && $searchLibrary && !$searchCity && !$searchNation){
             //search book by library
             $db->exec('BEGIN');
+            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "cardholder", "City","library" WHERE "lib_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "b_libid" AND "b_title" LIKE "%".?."%"');
+            // $statement->bindValue(1, $searchLibrary);
+            // $statement->bindValue(1, $searchBook);
             $statement = $db->prepare('SELECT * FROM "cardholder"');
             $result = $statement->execute() or die("Failed to fetch row!");
             // $statement = $db->prepare('SELECT * FROM "login"');
@@ -66,13 +78,19 @@
              }
         }
         else{
-            //search book by all option or just by isbn
+            //search book by all option
+            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "cardholder", "City","library" WHERE "city_cityid" = "lib_cityid" AND "lib_libid" = "b_libid" AND "b_title" LIKE "%".?."%"');
+            // $statement->bindValue(1, $searchLibrary);
+            // $statement->bindValue(1, $searchBook);
             $db->exec('BEGIN');
             $statement = $db->prepare('SELECT * FROM "cardholder"');
             $result = $statement->execute() or die("Failed to fetch row!");
             // $statement = $db->prepare('SELECT * FROM "login"');
-            $result = $statement->execute() or die("Failed to fetch row!");
+            $result1 = $statement->execute() or die("Failed to fetch row!");
+            $totalRecords = $result1->fetchArray(PDO::FETCH_COLUMN);
+            // $pagination = new Pagination($_GET['page'], $totalRecords, 10);
             $db->exec('COMMIT');
+            // $pages = new Paginator;
             //table mutation based on the query. In php, you can use echo to make html be able to be used inside the profile.php instead of being kept permanent in html (no if statement in html)           
             echo"<thead class='alert-info'>";
 				echo"<tr>";

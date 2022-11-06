@@ -45,11 +45,13 @@ if (isset($_POST['create'])) {
                         <input id="createAddress1" name="newAddress1" placeholder="Home Adreess" type="text" required="required">
                         <!-- <input id="createAddress2" name="newAddress2" placeholder="City" type="text" required="required"> -->
                         <select name="newAddress2" id="createAddress2"> 
+                            
                             <!-- <option value="Merced">Merced</option>
                             <option value="Los Angeles">Los Angeles</option>
                             <option value="New York">New York</option>
                             <option value="Seatle">Seatle</option>
                             <option value="Sacramento">Sacramento</option> -->
+                            <option name="newAddress2">Please Select City</option>
                             <?php
                                 $db = new SQLite3('../database/'.$databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
                                 $db->exec('BEGIN');
@@ -65,7 +67,7 @@ if (isset($_POST['create'])) {
 
                                         
                             
-                            <option name="newAddress2"></option>
+                            
                         </select>
                     </div>
                     <div class="form-group">
