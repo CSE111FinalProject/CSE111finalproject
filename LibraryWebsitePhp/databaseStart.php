@@ -21,6 +21,16 @@
     $result = $statement->execute();
     $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Sacramento",5,"No comment")');
     $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("San Deigo",5,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Miami",9,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Las Vegas",28,"No comment")');
+    $result = $statement->execute();
+    $statement = $db->prepare('INSERT INTO "City" ("city_name","city_stateid","city_comment")VALUES ("Cleveland",35,"No comment")');
+    $result = $statement->execute();
+    
+  
     
     // $db->exec($statement)or die("Failed to Insert");
     // $db->exec('COMMIT');
@@ -63,7 +73,7 @@
 
 
 
-    
+
     $csvFilepath = "csv/State.csv";
     $file = fopen($csvFilepath, "r") or die("Unable to open csv file");
     while(($row = fgetcsv($file))!== FALSE){
