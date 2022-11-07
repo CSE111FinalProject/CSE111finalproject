@@ -51,8 +51,8 @@
     'loanmovies_loanid' INTEGER NOT NULL,'loanmovies_movieid' INTEGER NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
 
-    $query="CREATE TABLE IF NOT EXISTS `Loanbooks`('Loanbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    'l_loanid' INTEGER NOT NULL,'b_bookid' INTEGER NOT NULL)";
+    $query="CREATE TABLE IF NOT EXISTS `Loanbooks`('loanbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    'loanbooks_loanid' INTEGER NOT NULL,'loanbooks_bookid' INTEGER NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
     
     $query="CREATE TABLE IF NOT EXISTS `library`('lib_libid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'lib_name' TEXT NOT NULL UNIQUE ON CONFLICT IGNORE,  'lib_address' TEXT NOT NULL,'lib_phone' INTEGER NOT NULL, 'lib_cityid' INTEGER NOT NULL, 'lib_commend' TEXT NOT NULL)";
@@ -60,11 +60,11 @@
     $csvFilepath = "csv/";
 
     $query="CREATE TABLE IF NOT EXISTS `Libbooks`('libbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    'libbooks_libid' INTEGER NOT NULL,'libbooks_bookid' INTEGER NOT NULL)";
+    'libbooks_libid' INTEGER NOT NULL,'libbooks_bookid' INTEGER NOT NULL,'libbooks_amount' INTEGER NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
 
     $query="CREATE TABLE IF NOT EXISTS `Libmovies`('libmovies_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    'libmovies_libid' INTEGER NOT NULL,'libmovies_movieid' INTEGER NOT NULL)";
+    'libmovies_libid' INTEGER NOT NULL,'libmovies_movieid' INTEGER NOT NULL,'libmovies_amount' INTEGER NOT NULL)";
     $db->exec($query)or die("Failed to create table! ");
     
     $query="CREATE TABLE IF NOT EXISTS `state`('s_stateid' INTEGER PRIMARY KEY AUTOINCREMENT,
