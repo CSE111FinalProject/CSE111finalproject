@@ -145,8 +145,16 @@
     $db->close();
 
     $db->exec('BEGIN');
-            $statement = $db->prepare('DELETE FROM "Libboks" WHERE "lib_books_id" = ?');
+            $statement = $db->prepare('DELETE FROM "Libboks" WHERE "lib_books_bookid" = ? ORDER BY "libbooks_libid" LIMIT 1');
             $statement->bindValue(1, $picked);
+            $result = $statement->execute();
+            $db->exec('COMMIT');
+    $db->close();
+
+    $db->exec('BEGIN');
+            $statement = $db->prepare('INSERT INTO "Loanmovies"("loanmovies_loanid","loanbooks_bookid") VALUES (?,?)');
+            $statement->bindValue(1, $loanid);
+            $statement->bindValue(2, $picked);
             $result = $statement->execute();
             $db->exec('COMMIT');
     $db->close();
