@@ -55,9 +55,9 @@ include('accessDatabase.php');
 								echo"<table class='table table-bordered'>";     
 								echo"<thead class='alert-info'>";
 								echo"<tr>";
-								echo"<th>State Material</th>";
-								echo"<th>State Loan Date</th>";
-								echo"<th>State Loan Date</th>";
+								echo"<th>Material</th>";
+								echo"<th>Loan Date</th>";
+								echo"<th>Loan Date</th>";
 						//add more columns if needed or change column need
 								echo"</tr>";
 								echo"</thead>";

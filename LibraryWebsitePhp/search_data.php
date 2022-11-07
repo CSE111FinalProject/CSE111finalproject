@@ -17,11 +17,12 @@
         if($searchBook && $searchCity && !$searchNation){
             //fetch book based on city location
             //We can just use if statements or create another file for each functionality and code include('file directory')
+            
+            $db->exec('BEGIN');
+            $statement = $db->prepare('SELECT * FROM "cardholder"');
             // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "City","library","Libbooks","books" WHERE "city_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "libbooks_libid" AND "libbooks_bookid" ="b_bookid" AND "b_title" LIKE "%".?."%"');
             // $statement->bindValue(1, $searchCity);
             // $statement->bindValue(1, $searchBook);
-            $db->exec('BEGIN');
-            $statement = $db->prepare('SELECT * FROM "cardholder"');
             $result = $statement->execute() or die("Failed to fetch row!");
             $db->exec('COMMIT');
             //table mutation based on the query. In php, you can use echo to make html be able to be used inside the profile.php instead of being kept permanent in html (no if statement in html)
