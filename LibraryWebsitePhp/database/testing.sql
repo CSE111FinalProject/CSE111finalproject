@@ -95,7 +95,7 @@ WHERE m_star LIKE '%?%'
     AND lib_name LIKE '%?%';
 
 
---search by movies by length ordered by movie time 
+--search by movies by length ordered by movie time based on current library 
 SELECT m_title, m_length, m_star, m_genre, m_year, m_condition
 FROM movies, library, Libmovies
 WHERE m_movieid = libmovies_movieid
@@ -134,4 +134,15 @@ GROUP BY ?
 ORDER BY b_genre ?; --ASC or DESC depending on the user 
 
 
---
+--search movies by year based on current library 
+SELECT m_title, m_length, m_star, m_genre, m_year, m_condition
+FROM movies, library, Libmovies
+WHERE m_movieid = libmovies_movieid
+    AND libmovies_libid = lib_libid
+ORDER BY m_year ?;
+
+--search current library for all movies 
+SELECT m_title, m_length, m_star, m_genre, m_year, m_condition
+FROM movies, library, Libmovies
+WHERE m_movieid = libmovies_movieid
+    AND libmovies_libid = lib_libid;
