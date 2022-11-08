@@ -52,6 +52,18 @@ VALUES (9, 'The Matrix Resurrections', 148, 'Keanu Reeves', 'Action, Sci-fi', 20
 INSERT INTO movies
 VALUES (10, 'The Matrix Revisited', 123, 'Lana & Lilly Wachowski', 'Documentory', 2001, 'Good', 'Review - Good Movie');
 
+INSERT INTO library 
+VALUES (1, 'UC Merced Library', '5200 N. Lake Road, 5200 Lake Rd #275, Merced, CA 95343', 2092284444, 1, 'University')
+INSERT INTO library 
+VALUES (2, 'UC Berkeley Library', '350 Moffitt Library, Berkeley, CA 94720', 5106425072, 1, 'University')
+INSERT INTO library 
+VALUES (3, 'UC Davis Library', '100 NW Quad, Davis, CA 95616', 5307528792, 1, 'University')
+INSERT INTO library 
+VALUES (4, 'UCI Law Library', '401 E Peltason Dr, Unit 1000, Irvine, CA 92697', 9498242404, 1, 'University')
+INSERT INTO library 
+VALUES (5, 'Geisel Library', '9500 Gilman Dr, La Jolla, CA 92093-5004', 8585343336, 1, 'University')
+
+
 SELECT *
 FROM books, library, Libbooks
 WHERE b_title LIKE '%?%'
