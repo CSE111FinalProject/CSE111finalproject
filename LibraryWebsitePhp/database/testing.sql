@@ -51,4 +51,10 @@ INSERT INTO movies
 VALUES (9, 'The Matrix Resurrections', 148, 'Keanu Reeves', 'Action, Sci-fi', 2021, 'Good', 'Review - Very Good Movie');
 INSERT INTO movies
 VALUES (10, 'The Matrix Revisited', 123, 'Lana & Lilly Wachowski', 'Documentory', 2001, 'Good', 'Review - Good Movie');
-  
+
+SELECT *
+FROM books, library, Libbooks
+WHERE b_title LIKE '%?%'
+    AND b_bookid = libbooks_bookid
+    AND libbooks_libid = lib_libid
+    AND lib_name = '%?%';
