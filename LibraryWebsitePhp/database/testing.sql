@@ -152,3 +152,33 @@ SELECT b_title, b_isbn, b_year, b_genre, b_condition
 FROM books, library, Libbooks
 WHERE b_bookid = libbooks_bookid
     AND libbooks_libid = lib_libid;
+
+
+--search for books in libraries in a given city 
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
+FROM books, library, Libbooks, city
+WHERE b_bookid = libbooks_bookid
+    AND libbooks_libid = lib_libid
+    AND lib_cityid = city_cityid
+    AND city_name LIKE '%?%';
+
+
+--search for movies in a library in a given city 
+SELECT m_title, m_length, m_star, m_genre, m_year, m_condition
+FROM movies, library, Libmovies, city
+WHERE m_movieid = libmovies_movieid
+    AND libmovies_libid = lib_libid
+    AND lib_cityid = city_cityid
+    AND city_name LIKE '%?%';
+
+
+--search for libraries in a given state grouped by city 
+SELECT city_name, lib_name, lib_address, lib_phone
+FROM library, city, state
+WHERE lib_cityid = city_cityid
+    AND city_stateid = s_stateid
+    AND s_name LIKE '%?%'
+GROUP BY city_name;
+
+
+--search 
