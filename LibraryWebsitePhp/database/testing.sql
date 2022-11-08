@@ -69,10 +69,10 @@ VALUES (5, 'Geisel Library', '9500 Gilman Dr, La Jolla, CA 92093-5004', 85853433
 
 
 --search books by library and title
-SELECT b_title, b_isbn, b_year, b_genre, b_conditon 
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
 FROM books, library, Libbooks
 WHERE b_title LIKE '%?%'
-    AND b_booksid = libbooks_bookid
+    AND b_bookid = libbooks_bookid
     AND libbooks_libid = lib_libid
     AND lib_name LIKE '%?%';
 
@@ -104,30 +104,30 @@ ORDER BY m_length ?; --insert command ASC or DESC depending on user click choice
 
 
 --search books by genre 
-SELECT b_title, b_isbn, b_year, b_genre, b_conditon 
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
 FROM books
 WHERE b_genre LIKE '%?%';
 
 
 --search books by isbn 
-SELECT b_title, b_isbn, b_year, b_genre, b_conditon 
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
 FROM books
 WHERE b_isbn = ?;
 
 
 --search books in a library with order by year 
-SELECT b_title, b_isbn, b_year, b_genre, b_conditon 
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
 FROM books, library, Libbooks
-WHERE b_booksid = libbooks_bookid
+WHERE b_bookid = libbooks_bookid
     AND libbooks_libid = lib_libid
     AND lib_name LIKE '%?%'
 ORDER BY b_year ?; --change between ASC and DESC bases on user choice 
 
 
 --search for book at a library grouped by genre ordered by genre alpebetically up or down
-SELECT b_title, b_isbn, b_year, b_genre, b_conditon 
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
 FROM books, library, Libbooks
-WHERE b_booksid = libbooks_bookid
+WHERE b_bookid = libbooks_bookid
     AND libbooks_libid = lib_libid
     AND lib_name LIKE '%?%'
 GROUP BY ?
@@ -146,3 +146,9 @@ SELECT m_title, m_length, m_star, m_genre, m_year, m_condition
 FROM movies, library, Libmovies
 WHERE m_movieid = libmovies_movieid
     AND libmovies_libid = lib_libid;
+
+--search current library for all books
+SELECT b_title, b_isbn, b_year, b_genre, b_condition 
+FROM books, library, Libbooks
+WHERE b_bookid = libbooks_bookid
+    AND libbooks_libid = lib_libid;
