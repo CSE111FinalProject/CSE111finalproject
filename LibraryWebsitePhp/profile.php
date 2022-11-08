@@ -44,10 +44,10 @@ include('accessDatabase.php');
 							$db->enableExceptions(true);
 							$db->exec('BEGIN');
             
-							$statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "l_loanid" = "loanbooks_loanid" AND "loanbooks_bookid" = "b_bookid"');
-							
-							$statement1 = $db->prepare('SELECT * FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "l_loanid" = "loanmovies_loanid" AND "loanmovies_movieid" = "m_movieid"');
-							
+							$statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanbooks_loanid" AND "loanbooks_bookid" = "b_bookid"');
+							$statement->bindValue(1,$login_session);
+							$statement1 = $db->prepare('SELECT * FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanmovies_loanid" AND "loanmovies_movieid" = "m_movieid"');
+							$statement1->bindValue(1, $login_session);
 							$result = $statement->execute() or die("Failed to fetch row!");
 							$result1 = $statement1->execute() or die("Failed to fetch row!");
 							list($material,$loandate,$fees) = $result->fetchArray(PDO::FETCH_NUM);

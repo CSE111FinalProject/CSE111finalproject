@@ -103,6 +103,11 @@
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $password);
 
+            
+    $statement = $db->prepare('SELECT "city_cityid" FROM "City" WHERE "city_name" = ?');
+    $statement->bindValue(1, $city);
+    $result = $statement->execute();
+
     $statement = $db->prepare('INSERT INTO "cardholder" ("c_username","c_password","c_address","c_cityid","c_phone","c_acctbal","c_comment")VALUES (?,?,?,?,?,?,?)');
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $password);
@@ -112,9 +117,6 @@
             $statement->bindValue(6, 0);
             $statement->bindValue(7,"No comment");
     
-    $statement = $db->prepare('SELECT "city_cityid" FROM "City" WHERE "city_name" = ?');
-            $statement->bindValue(1, $city);
-            $result = $statement->execute();
 
     $db->exec('BEGIN');
             $statement  = $db->prepare('SELECT "city_name" FROM "City"');
@@ -141,5 +143,26 @@
             $result = $statement->execute();
             $db->exec('COMMIT');
     $db->close();
+
+    $db->exec('BEGIN');
+            $statement = $db->prepare('DELETE FROM "Libboks" WHERE "lib_books_bookid" = ? ORDER BY "libbooks_libid" LIMIT 1');
+            $statement->bindValue(1, $picked);
+            $result = $statement->execute();
+            $db->exec('COMMIT');
+    $db->close();
+
+    $db->exec('BEGIN');
+            $statement = $db->prepare('INSERT INTO "Loanmovies"("loanmovies_loanid","loanbooks_bookid") VALUES (?,?)');
+            $statement->bindValue(1, $loanid);
+            $statement->bindValue(2, $picked);
+            $result = $statement->execute();
+            $db->exec('COMMIT');
+    $db->close();
+           
+    $statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "l_loanid" = "loanbooks_loanid" AND "loanbooks_bookid" = "b_bookid"');
+							
+        $statement1 = $db->prepare('SELECT * FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "l_loanid" = "loanmovies_loanid" AND "loanmovies_movieid" = "m_movieid"');
+							
+
 
 ?>
