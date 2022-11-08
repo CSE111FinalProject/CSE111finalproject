@@ -55,6 +55,13 @@ VALUES (10, 'The Matrix Revisited', 123, 'Lana & Lilly Wachowski', 'Documentory'
 SELECT *
 FROM books, library, Libbooks
 WHERE b_title LIKE '%?%'
-    AND b_bookid = libbooks_bookid
+    AND b_booksid = libbooks_bookid
     AND libbooks_libid = lib_libid
     AND lib_name = '%?%';
+
+SELECT * 
+FROM movies, library, Libmovies
+WHERE m_title LIKE '%?%'
+    AND m_movieid = libmovies_movieid
+    AND libmovies_libid = lib_libid
+    AND lib_name = '%?%'
