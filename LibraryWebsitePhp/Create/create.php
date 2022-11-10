@@ -8,15 +8,19 @@
             $username = $_POST['createdUser'];
             $password = $_POST['newPassword'];
             $homeAdress = $_POST['newAddress1'];
-            $city = $_POST['newAddress2'];
+            $city = $_POST['newCity'];
+            $state = $_POST['newAddress2'];
             $phoneNumber = $_POST['newPhone'];
             $db = new SQLite3('../database/'. $databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
             $db->enableExceptions(true);
             $db->exec('BEGIN');
-            $statement = $db->prepare('SELECT "city_cityid" FROM "City" WHERE "city_name" = ?');
-            $statement->bindValue(1, $city);
+            $search = "%".$city."%";
+            $statement = $db->prepare('SELECT "city_cityid" FROM "City" WHERE "city_name" LIKE ?');
+            $statement->bindValue(1, $search);
             $result = $statement->execute();
-            // list($queryCity) = $result->fetchArray(PDO::FETCH_NUM);
+            list($cityid) = $result->fetchArray(PDO::FETCH_NUM);
+            if($cityid){
+                // list($queryCity) = $result->fetchArray(PDO::FETCH_NUM);
             $ROW = $result->fetchArray();
             $db->exec('COMMIT');
             // $db->close();
@@ -28,7 +32,7 @@
             $statement->bindValue(1, $username);
             $statement->bindValue(2, $password);
             $statement->bindValue(3, $homeAdress);
-            $statement->bindValue(4,$ROW['city_cityid']);
+            $statement->bindValue(4,$cityid);
             $statement->bindValue(5, $phoneNumber);
             $statement->bindValue(6, 0);
             $statement->bindValue(7,"No comment");
@@ -53,6 +57,10 @@
                 $error = "Username in database"; //GOBACK TO create account if username is in database
                 // header("location: createAccount.php");
             } // Redirecting To Profile Page
+            }else{
+                $error = "Username in database"; 
+            }
+            
             $db->close();
                 
     }

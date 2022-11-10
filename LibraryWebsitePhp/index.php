@@ -1,5 +1,5 @@
 <?php
-require_once'databaseStart.php'; //IF the database or table is not created, the program will create them
+require_once('databaseStart.php'); //IF the database or table is not created, the program will create them
 include('AccountManage/login.php'); // Includes Login Script
 if(isset($_SESSION['login_user'])){
     header("location: profile.php"); // Redirecting To Profile Page

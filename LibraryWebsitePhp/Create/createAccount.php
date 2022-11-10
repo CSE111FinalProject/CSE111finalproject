@@ -44,6 +44,10 @@ if (isset($_POST['create'])) {
                         <label>Address :</label>
                         <input id="createAddress1" name="newAddress1" placeholder="Home Adreess" type="text" required="required">
                         <!-- <input id="createAddress2" name="newAddress2" placeholder="City" type="text" required="required"> -->
+                        <div class="form-group">
+                        <label>Password :</label>
+                        <input id="createCity" name="newCity" placeholder="City" type="text" required="required">
+                    
                         <select name="newAddress2" id="createAddress2"> 
                             
                             <!-- <option value="Merced">Merced</option>
@@ -51,17 +55,17 @@ if (isset($_POST['create'])) {
                             <option value="New York">New York</option>
                             <option value="Seatle">Seatle</option>
                             <option value="Sacramento">Sacramento</option> -->
-                            <option name="newAddress2">Please Select City</option>
+                            <option name="newAddress2">Please Select State</option>
                             <?php
                                 $db = new SQLite3('../database/'.$databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
                                 $db->exec('BEGIN');
-                                $statement  = $db->prepare('SELECT "city_name" FROM "City"');
+                                $statement  = $db->prepare('SELECT "s_name" FROM "State"');
                                 $result = $statement->execute();
                                 $db->exec('COMMIT');
                                 
                                 while($rows=$result->fetchArray()){
                                     // echo $rows['city_name'];
-                                    echo '<option value="'.$rows['city_name'].'">'.$rows['city_name'].'</option>';
+                                    echo '<option value="'.$rows['s_name'].'">'.$rows['s_name'].'</option>';
                                 }
                                     ?>
 
@@ -69,6 +73,7 @@ if (isset($_POST['create'])) {
                             
                             
                         </select>
+                        </div> 
                     </div>
                     <div class="form-group">
                         <label>Phone Number :</label>

@@ -44,29 +44,39 @@ include('accessDatabase.php');
 							$db->enableExceptions(true);
 							$db->exec('BEGIN');
             
-							$statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanbooks_loanid" AND "loanbooks_bookid" = "b_bookid"');
+							$statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees","l_loanlength" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanbooks_loanid" AND "loanbooks_bookid" = "b_bookid"');
 							$statement->bindValue(1,$login_session);
-							$statement1 = $db->prepare('SELECT * FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanmovies_loanid" AND "loanmovies_movieid" = "m_movieid"');
+							$statement1 = $db->prepare('SELECT "m_title","l_loandate","l_fees","l_loanlength" FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanmovies_loanid" AND "loanmovies_movieid" = "m_movieid"');
 							$statement1->bindValue(1, $login_session);
 							$result = $statement->execute() or die("Failed to fetch row!");
 							$result1 = $statement1->execute() or die("Failed to fetch row!");
-							list($material,$loandate,$fees) = $result->fetchArray(PDO::FETCH_NUM);
-							if($material){
+							$db->exec('COMMIT');
+							list($material,$loandate,$fees,$time) = $result->fetchArray(PDO::FETCH_NUM);
+							list($material1,$loandate1,$fees1,$time1) = $result1->fetchArray(PDO::FETCH_NUM);
+							if($material || $material1){
 								echo"<table class='table table-bordered'>";     
 								echo"<thead class='alert-info'>";
 								echo"<tr>";
 								echo"<th>Material</th>";
 								echo"<th>Loan Date</th>";
-								echo"<th>Loan Date</th>";
+								echo"<th>Loan Fees</th>";
+								echo"<th>Loan Time Remaining</th>";
 						//add more columns if needed or change column need
 								echo"</tr>";
 								echo"</thead>";
-								while($fetch=$result->fetchArray()){
-									echo"<tr><td>".$fetch['b_title']."</td><td>".$fetch['l_loandate']."</td><td>".$fetch['l_fees']."</td></tr>";
+								if($material){
+									echo"<tr><td>".$material."</td><td>".$loandate."</td><td>"."$".$fees."</td><td>".$time."</td></tr>";
+									while($fetch=$result->fetchArray()){
+										echo"<tr><td>".$fetch['b_title']."</td><td>".$fetch['l_loandate']."</td><td>"."$".$fetch['l_fees']."</td><td>".$fetch['l_loanlength']."</td></tr>";
+									}
 								}
-								while($fetch=$result1->fetchArray()){
-									echo"<tr><td>".$fetch['m_title']."</td><td>".$fetch['l_loandate']."</td><td>".$fetch['l_fees']."</td></tr>";
+								if($material1){
+									echo"<tr><td>".$material1."</td><td>".$loandate1."</td><td>"."$".$fees1."</td><td>".$time1."</td></tr>";
+									while($fetch=$result1->fetchArray()){
+										echo"<tr><td>".$fetch['m_title']."</td><td>".$fetch['l_loandate']."</td><td>"."$".$fetch['l_fees']."</td><td>".$fetch['l_loanlength']."</td></tr>";
+									}
 								}
+								
 									echo"</table>";
 							}else{
 								echo "No Loaned Material";
@@ -106,7 +116,11 @@ include('accessDatabase.php');
 						</div>
 						<div class="form-group">
 							<label>Book Name: </label>
-							<input id = "search" name="bookSearch" type = "text" required="required">
+							<input id = "search" name="bookSearch" type = "text">
+						</div>
+						<div class ="form-group">
+							<label>Movie name: </label>
+							<input id = "search" name = "movieSearch" type = "text">
 						</div>
 						<div class ="form-group">
 							<label>Isbn Code: </label>
