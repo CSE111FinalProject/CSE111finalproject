@@ -10,5 +10,5 @@ SELECT libbooks_id,b_title,b_year,lib_name FROM Libbooks, library,books WHERE li
 -- .mode csv
 -- .separator ,
 -- .import database/bookss books
-DELETE FROM Loanmovies;
+DELETE FROM cardholder;
 

@@ -37,7 +37,7 @@ include('accessDatabase.php');
 				
 						<input name="logout" type="submit" value=" Log Out ">
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="overflow:auto; height: 450px;">
 						<label>Borrowed Material: </label>
 						<?php
 							$db = new SQLite3('database/'. $databaseName, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
@@ -57,7 +57,7 @@ include('accessDatabase.php');
 								echo"<table class='table table-bordered'>";     
 								echo"<thead class='alert-info'>";
 								echo"<tr>";
-								echo"<th>Material</th>";
+								echo"<th>Book Material</th>";
 								echo"<th>Loan Date</th>";
 								echo"<th>Loan Fees</th>";
 								echo"<th>Loan Time Remaining</th>";
@@ -70,7 +70,19 @@ include('accessDatabase.php');
 										echo"<tr><td>".$fetch['b_title']."</td><td>".$fetch['l_loandate']."</td><td>"."$".$fetch['l_fees']."</td><td>".$fetch['l_loanlength']."</td></tr>";
 									}
 								}
+								echo"</table>";
+								echo"<table class='table table-bordered'>";     
+								echo"<thead class='alert-info'>";
+								echo"<tr>";
+								echo"<th>Movie Material</th>";
+								echo"<th>Loan Date</th>";
+								echo"<th>Loan Fees</th>";
+								echo"<th>Loan Time Remaining</th>";
+						//add more columns if needed or change column need
+								echo"</tr>";
+								echo"</thead>";
 								if($material1){
+									
 									echo"<tr><td>".$material1."</td><td>".$loandate1."</td><td>"."$".$fees1."</td><td>".$time1."</td></tr>";
 									while($fetch=$result1->fetchArray()){
 										echo"<tr><td>".$fetch['m_title']."</td><td>".$fetch['l_loandate']."</td><td>"."$".$fetch['l_fees']."</td><td>".$fetch['l_loanlength']."</td></tr>";
