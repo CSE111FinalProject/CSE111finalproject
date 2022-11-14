@@ -67,7 +67,7 @@
 
 				echo"<tr>";
                     echo"<th>Borrow Id</th>";
-                    echo"<th>Material Title</th>";
+                    echo"<th>Book Title</th>";
                     echo"<th>Material Published</th>";
                     echo"<th>Library Name</th>";
 					//add more columns if needed or change column need
@@ -82,9 +82,20 @@
                     echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td></tr>";
                 }
             }
+            echo"</table>";
+            echo"<table class='table table-bordered'>";
+            echo"<thead class='alert-info'>";
+
+				echo"<tr>";
+                    echo"<th>Borrow Id</th>";
+                    echo"<th>Movie Title</th>";
+                    echo"<th>Material Published</th>";
+                    echo"<th>Library Name</th>";
+					//add more columns if needed or change column need
+				echo"</tr>";
+			echo"</thead>";
             if($material1){
-                echo"<tr><td>"."MOVIE"."</td><td>"."MOVIE"."</td><td>"."MOVIE"."</td><td>"."MOVIE"."</td></tr>";
-                echo"<tr><td>"."_____"."</td><td>"."_____"."</td><td>"."_____"."</td><td>"."_____"."</td></tr>";
+                
                 echo"<tr><td>".$id1."</td><td>".$material1."</td><td>".$Year1."</td><td>".$Libname1."</td></tr>";
                 while($fetch=$result1->fetchArray()){
                     echo"<tr><td>".$fetch['libmovies_id']."</td><td>".$fetch['m_title']."</td><td>".$fetch['m_year']."</td><td>".$fetch['lib_name']."</td></tr>";

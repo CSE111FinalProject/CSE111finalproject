@@ -12,3 +12,9 @@ SELECT libbooks_id,b_title,b_year,lib_name FROM Libbooks, library,books WHERE li
 -- .import database/bookss books
 DELETE FROM cardholder;
 
+-- .eqp on
+-- .expert on
+-- select c_address, c_phone, c_acctbal
+-- from customer
+-- where c_name='Customer#000000010';
+

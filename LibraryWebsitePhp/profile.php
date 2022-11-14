@@ -155,30 +155,27 @@ include('accessDatabase.php');
 				
 				<div class="col-md-6">
 				<center><h3 class="text-primary">Borrow Materials</h3></center>
-					<!-- <label>Borrow Materials</label> -->
-					<form method = "POST" action ="">
-						<div class="form-group">
-							<label> Search by city: </label>
-							<input id = "search" name="citySearch" type = "text" >
+					
+					<div class ="form-group">
+					<select name="Borrow" id="BorrowId"> 
+                            
+                            <option name="newBorrowType">Please Select Type</option>
+							<option value="Los Angeles">Movie</option>
+                            <option value="New York">Book</option>
+                            
+
+                                        
+                            
+                    
+                        </select>
 						</div>
-						<div class="form-group">
-							<label>Search by Nation: </label>
-							<input id = "search" name="NationSearch" type = "text">
-						</div>
-						<div class="form-group">
-							<label>Book Name: </label>
-							<input id = "search" name="bookSearch" type = "text" required="required">
-						</div>
-						<div class ="form-group">
-							<label>Isbn Code: </label>
-							<input id = "search" name = "isbnSearch" type = "text">
-						</div>
-						<div class ="form-group">
-							<label>Library name: </label>
-							<input id = "search" name = "librarySearch" type = "text">
-						</div>
-						<button class="btn btn-success" name="borrow"><span class="glyphicon glyphicon-book"></span> Borrow</button>
-					</form>
+						<form action="Borrow/BorrowAction.php" method="post">
+							<div class ="form-group">
+								<label>Id: </label>
+								<input id = "BorrowIn" name = "BorrowIn" type = "text">
+							</div>
+						</form>
+
 					<br>
 				</div>	
 				</center>	
@@ -194,7 +191,11 @@ include('accessDatabase.php');
 				<hr style="border-top:1px dotted #ccc;"/>
 					<tbody>
 						<!-- when search is pressed, data will show -->
-						<?php include 'search_data.php' ?>
+						<?php 
+			
+							include 'search_data.php';
+						
+						?>
 					</tbody>
 							
 		</div>

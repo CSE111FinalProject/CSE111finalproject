@@ -53,10 +53,10 @@
                 $_SESSION['login_user'] = $username; // Initializing Session
                 header("location: ../profile.php");
             }
-            else{
-                $error = "Username in database"; //GOBACK TO create account if username is in database
-                // header("location: createAccount.php");
-            } // Redirecting To Profile Page
+            // else{
+            //     $error = "Username in database"; //GOBACK TO create account if username is in database
+            //     // header("location: createAccount.php");
+            // } // Redirecting To Profile Page
             }else{
                 $error = "Username in database"; 
             }
