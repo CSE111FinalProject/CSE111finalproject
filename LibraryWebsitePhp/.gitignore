@@ -1,3 +1,6 @@
 node_modules
-# librarydatabase.sqlite
+librarydatabase.sqlite
 analytics.sqlite
+composer.json
+composer.lock
+vendor

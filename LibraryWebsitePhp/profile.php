@@ -37,6 +37,12 @@ include('accessDatabase.php');
 				
 						<input name="logout" type="submit" value=" Log Out ">
 					</div>
+				</form>
+				<form method="POST" action = "AccountManage/Delete.php">
+					<div class="form-group">
+						<input name= "delete" type="submit" value = "DeleteAcc">
+					</div>
+				</form>
 					<div class="form-group" style="overflow:auto; height: 450px;">
 						<label>Borrowed Material: </label>
 						<?php
@@ -98,7 +104,7 @@ include('accessDatabase.php');
 						
 					</div>
 					
-				</form>
+				
 				<br>
 			<!-- <br/> -->
 		</div>
@@ -123,8 +129,8 @@ include('accessDatabase.php');
 							<input id = "search" name="citySearch" type = "text" >
 						</div>
 						<div class="form-group">
-							<label>Search by Nation: </label>
-							<input id = "search" name="NationSearch" type = "text">
+							<label>Search by State: </label>
+							<input id = "search" name="StateSearch" type = "text">
 						</div>
 						<div class="form-group">
 							<label>Book Name: </label>

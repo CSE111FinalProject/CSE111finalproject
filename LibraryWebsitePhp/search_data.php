@@ -6,7 +6,7 @@
     include('accessDatabase.php');
     $error = '';
     if(isset($_POST['search'])){
-        $searchNation = $_POST['NationSearch'];
+        $searchState = $_POST['StateSearch'];
         $searchCity = $_POST['citySearch'];
         $searchBook = $_POST['bookSearch'];
         $searchLibrary = $_POST['librarySearch'];
@@ -16,7 +16,7 @@
         $db->enableExceptions(true);
         
         //PLEASE KEEP THIS TEMPLATE to add more if condition
-        if($searchBook && $searchCity && !$searchNation){
+        if($searchBook && $searchCity && !$searchState){
             //fetch book based on city location
             //We can just use if statements or create another file for each functionality and code include('file directory')
             
@@ -44,7 +44,7 @@
              }
              echo"</table>";
         }
-        else if(!$searchBook && $searchLibrary && !$searchCity && !$searchNation && !$movieSearch){
+        else if(!$searchBook && $searchLibrary && !$searchCity && !$searchState && !$movieSearch){
             //search book by library
             $db->exec('BEGIN');
             $search1 = "%" .$searchBook."%";
@@ -102,7 +102,7 @@
                 }
             }
              echo"</table>";
-        }else if($searchBook && !$searchCity && !$searchLibrary && !$searchNation && !$movieSearch){
+        }else if($searchBook && !$searchCity && !$searchLibrary && !$searchState && !$movieSearch){
             $db->exec('BEGIN');
             $search = "%" .$searchBook."%";
             $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name" FROM "Libbooks", "library","books" WHERE "libbooks_libid" = "lib_libid" AND "libbooks_bookid" = "b_bookid" and "b_title" LIKE ?');
@@ -124,7 +124,7 @@
                 echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td></tr>";
             }
             echo"</table>";
-        }else if($movieSearch && !$searchBook && !$searchCity && !$searchLibrary && !$searchNation){
+        }else if($movieSearch && !$searchBook && !$searchCity && !$searchLibrary && !$searchState){
             $db->exec('BEGIN');
             $search = "%" .$movieSearch."%";
             $statement = $db->prepare('SELECT * FROM "Libmovies", "library","movies" WHERE "libmovies_libid" = "lib_libid" AND "libmovies_movieid" = "m_movieid" and "m_title" LIKE ?');
