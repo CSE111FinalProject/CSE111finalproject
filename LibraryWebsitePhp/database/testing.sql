@@ -18,3 +18,13 @@ DELETE FROM cardholder;
 -- from customer
 -- where c_name='Customer#000000010';
 
+SELECT b_title, b_author, b_isbn, b_year, b_genre --search book by title
+FROM books 
+WHERE b_title LIKE '%?%'
+
+SELECT m_title, m_length, m_star, m_year, m_genre
+
+
+
+
+
