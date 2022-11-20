@@ -35,14 +35,14 @@
         
         
         
-        $query="CREATE TABLE IF NOT EXISTS `Loanmovies`('loanmovies_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        'loanmovies_loanid' INTEGER NOT NULL,'loanmovies_movieid' INTEGER NOT NULL)";
+        $query="CREATE TABLE IF NOT EXISTS `Loanmovies`('lm_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        'lm_loanid' INTEGER NOT NULL,'lm_movieid' INTEGER NOT NULL,'lm_libraryid' INTEGER NOT NULL )";
         $db->exec($query)or die("Failed to create table! ");
         
         
         
-        $query="CREATE TABLE IF NOT EXISTS `Loanbooks`('loanbooks_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        'loanbooks_loanid' INTEGER NOT NULL,'loanbooks_bookid' INTEGER NOT NULL)";
+        $query="CREATE TABLE IF NOT EXISTS `Loanbooks`('lb_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        'lb_loanid' INTEGER NOT NULL,'lb_bookid' INTEGER NOT NULL, 'lb_libraryid' INTEGER NOT NULL)";
         $db->exec($query)or die("Failed to create table! ");
         
         

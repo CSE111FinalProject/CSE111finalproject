@@ -371,3 +371,16 @@ $users = $sth->fetchAll(PDO::FETCH_OBJ);
     
 ?>
             $statement = $db->prepare("SELECT 'libbooks_id','b_title','b_year','lib_name' FROM 'Libbooks', 'library','books' WHERE 'libbooks_libid = lib_libid' AND 'libbooks_bookid = b_bookid' AND b_title LIKE '%".$searchBook."%'");
+
+
+
+
+
+
+
+
+
+
+
+
+            

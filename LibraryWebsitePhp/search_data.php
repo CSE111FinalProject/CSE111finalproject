@@ -2,7 +2,7 @@
     //This is where we would implement the query for our library function
     
     // require_once 'vendor/autoload.php';
-
+    // echo "HELLO";
     include('accessDatabase.php');
     $error = '';
     if(isset($_POST['search'])){
@@ -103,6 +103,7 @@
             }
              echo"</table>";
         }else if($searchBook && !$searchCity && !$searchLibrary && !$searchState && !$movieSearch){
+            
             $db->exec('BEGIN');
             $search = "%" .$searchBook."%";
             $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name" FROM "Libbooks", "library","books" WHERE "libbooks_libid" = "lib_libid" AND "libbooks_bookid" = "b_bookid" and "b_title" LIKE ?');

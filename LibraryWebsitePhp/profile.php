@@ -8,6 +8,7 @@ include('accessDatabase.php');
 	}
 	
 ?>
+<!-- $userName = $user_check; -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -20,7 +21,13 @@ include('accessDatabase.php');
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<a class="navbar-brand" >Testing</a>
+			<form method="POST" action="Delete.php">
+				<div class="form-group" style="float: right;">
+					<input name= "delete" type="submit" value = "DeleteAcc" >
+				</div>
+		</form>
 		</div>
+		
 	</nav>
 	<center>
 	<br>
@@ -31,18 +38,17 @@ include('accessDatabase.php');
 		
 			<h3 class="text-primary">Profile Page</h3>
 			<hr style="border-top:1px dotted #ccc;"/>
-				<form method="POST" action="AccountManage/logout.php">
-					<div class="form-group">
-						<label>Welcome :<?php echo $login_session; ?></label>
 				
-						<input name="logout" type="submit" value=" Log Out ">
-					</div>
-				</form>
-				<form method="POST" action = "AccountManage/Delete.php">
 					<div class="form-group">
-						<input name= "delete" type="submit" value = "DeleteAcc">
+						<form method="POST" action="AccountManage/logout.php">
+							<label>Welcome :<?php echo $login_session; ?></label>
+				
+							<input name="logout" type="submit" value=" Log Out ">
+						</form>
+						
+						
 					</div>
-				</form>
+					
 					<div class="form-group" style="overflow:auto; height: 450px;">
 						<label>Borrowed Material: </label>
 						<?php
@@ -50,9 +56,9 @@ include('accessDatabase.php');
 							$db->enableExceptions(true);
 							$db->exec('BEGIN');
             
-							$statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees","l_loanlength" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanbooks_loanid" AND "loanbooks_bookid" = "b_bookid"');
+							$statement = $db->prepare('SELECT "b_title", "l_loandate","l_fees","l_loanlength" FROM "cardholder", "loans","books","Loanbooks" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "lb_loanid" AND "lb_bookid" = "b_bookid"');
 							$statement->bindValue(1,$login_session);
-							$statement1 = $db->prepare('SELECT "m_title","l_loandate","l_fees","l_loanlength" FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "loanmovies_loanid" AND "loanmovies_movieid" = "m_movieid"');
+							$statement1 = $db->prepare('SELECT "m_title","l_loandate","l_fees","l_loanlength" FROM "cardholder", "loans","movies","Loanmovies" WHERE "c_cardid" = "l_cardid" AND "c_username" = ? AND "l_loanid" = "lm_loanid" AND "lm_movieid" = "m_movieid"');
 							$statement1->bindValue(1, $login_session);
 							$result = $statement->execute() or die("Failed to fetch row!");
 							$result1 = $statement1->execute() or die("Failed to fetch row!");
@@ -107,7 +113,7 @@ include('accessDatabase.php');
 				
 				<br>
 			<!-- <br/> -->
-		</div>
+			</div>
 		<div class="w-100 d-none d-md-block"></div>
 			</center>
 			
@@ -162,26 +168,25 @@ include('accessDatabase.php');
 				<div class="col-md-6">
 				<center><h3 class="text-primary">Borrow Materials</h3></center>
 					
-					<div class ="form-group">
-					<select name="Borrow" id="BorrowId"> 
-                            
-                            <option name="newBorrowType">Please Select Type</option>
-							<option value="Los Angeles">Movie</option>
-                            <option value="New York">Book</option>
-                            
-
-                                        
-                            
-                    
-                        </select>
+					
+					<form action="BorrowAction.php" method="post">
+						<div class ="form-group">
+							<select name="Borrow" id="BorrowId"> 
+								
+								<option name="newBorrowType">Please Select Type</option>
+								<option value="Movie">Movie</option>
+								<option value="Book">Book</option>
+							</select>
 						</div>
-						<form action="Borrow/BorrowAction.php" method="post">
 							<div class ="form-group">
 								<label>Id: </label>
 								<input id = "BorrowIn" name = "BorrowIn" type = "text">
+								<button class="btn btn-success" name="Borrowing"><span class="glyphicon glyphicon-search"></span> Search</button>
+
 							</div>
 						</form>
 
+						
 					<br>
 				</div>	
 				</center>	
@@ -207,10 +212,8 @@ include('accessDatabase.php');
 		</div>
 			
 		</div>
+		
 </body>
 
 
 </html>
-
-
-
