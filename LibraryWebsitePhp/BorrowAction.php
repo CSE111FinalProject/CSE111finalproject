@@ -58,7 +58,7 @@
             $db->close();
             header("location: ../profile.php");
             // $db->close();
-        }else{
+        }else if ($materialtype == "Book"){
             $statement = $db->prepare('SELECT "c_cardid" FROM "cardholder" WHERE "c_username" = ?');
             $statement->bindValue(1, $username);
             $result = $statement->execute();
@@ -95,6 +95,9 @@
             // $statement = $db->prepare('DELETE FROM "Libmovies" WHERE ')
             $db->exec('COMMIT');
             $db->close();
+            header("location: ../profile.php");
+        }
+        else{
             header("location: ../profile.php");
         }
 

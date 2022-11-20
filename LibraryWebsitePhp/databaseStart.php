@@ -18,6 +18,9 @@
         //Modify these with relevant column attribute and also do insert
         $query="CREATE TABLE IF NOT EXISTS `loans`('l_loanid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'l_cardid' INTEGER NOT NULL, 'l_loandate' DATE, 'l_loanstatus' TEXT NOT NULL, 'l_loanlength' INTEGER NOT NULL, 'l_fees' INTEGER NOT NULL, 'l_feestatus' TEXT NOT NULL, 'l_comment' TEXT NOT NULL)";
         $db->exec($query)or die("Failed to create table! ");
+
+        $query="CREATE TABLE IF NOT EXISTS `pastLoans`('pl_loanid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'pl_cardid' INTEGER NOT NULL, 'pl_loandate' DATE, 'pl_loanstatus' TEXT NOT NULL, 'pl_loanlength' INTEGER NOT NULL, 'pl_fees' INTEGER NOT NULL, 'pl_feestatus' TEXT NOT NULL, 'pl_comment' TEXT NOT NULL,'pl_type' TEXT NOT NULL, 'pl_materialid' INTEGER NOT NULL, 'pl_libraryid' INTEGER NOT NULL)";
+        $db->exec($query)or die("Failed to create table! ");
         
 
         $query="CREATE TABLE IF NOT EXISTS `books`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

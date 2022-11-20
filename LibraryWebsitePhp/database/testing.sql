@@ -18,19 +18,9 @@
 -- from customer
 -- where c_name='Customer#000000010';
 
-<<<<<<< HEAD
 -- SELECT l_loanid  FROM loans ORDER BY l_loanid DESC LIMIT 1;
 
 -- SELECT b_title FROM Libbooks, books WHERE b_bookid = libbooks_id AND b_title LIKE "%harry%";
-=======
-SELECT b_title, b_author, b_isbn, b_year, b_genre --search book by title
-FROM books 
-WHERE b_title LIKE '%?%'
 
-SELECT m_title, m_length, m_star, m_year, m_genre
-
-
-
-
->>>>>>> 0159df0e38cc1a2dcdff042b12f3e4d1e9941af6
+-- INSERT INTO "pastLoans" ("pl_loanid","pl_cardid","pl_loandate", "pl_loanstatus","pl_loanlength", "pl_fees","pl_feestatus","pl_comment") VALUES (1,2,3,4,5,6,7,8);
 
