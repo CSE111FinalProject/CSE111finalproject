@@ -47,14 +47,21 @@
         else if(!$searchBook && $searchLibrary && !$searchCity && !$searchState && !$movieSearch){
             //search book by library
             $db->exec('BEGIN');
-            $search1 = "%" .$searchBook."%";
-            $search2 = "%" .$searchLibrary."%";
-            $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name" FROM "Libbooks", "library","books" WHERE "b_bookid" = "libbooks_bookid" AND "libbooks_libid" = "lib_libid" AND "lib_name" LIKE ?');
-            $statement->bindValue(1,$search2);
+            $search1 = "%" .$searchLibrary."%";
+            $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name" 
+                                        FROM "Libbooks", "library","books" 
+                                        WHERE "b_bookid" = "libbooks_bookid" 
+                                            AND "libbooks_libid" = "lib_libid" 
+                                            AND "lib_name" LIKE ?');
+            $statement->bindValue(1,$search1);
             $result = $statement->execute() or die("Failed to fetch row");
             $db->exec('COMMIT');
             $db->exec('BEGIN');//Movies
-            $statement1 = $db->prepare('SELECT "libmovies_id","m_title","m_year","lib_name" FROM "movies","library","Libmovies" WHERE "m_movieid" = "libmovies_movieid"  AND "libmovies_libid" = "lib_libid" AND "lib_name" LIKE ?');
+            $statement1 = $db->prepare('SELECT "libmovies_id","m_title","m_year","lib_name" 
+                                        FROM "movies","library","Libmovies" 
+                                        WHERE "m_movieid" = "libmovies_movieid"  
+                                            AND "libmovies_libid" = "lib_libid" 
+                                            AND "lib_name" LIKE ?');
             $statement1->bindValue(1, $search2);
             $result1 = $statement1->execute() or die("Failed to fetch row");
             $db->exec('COMMIT');
