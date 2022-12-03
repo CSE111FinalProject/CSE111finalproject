@@ -207,7 +207,7 @@ include('accessDatabase.php');
 							<div class ='form-group'>
 								<label>Id: </label>
 								<input id = 'BorrowIn' name = 'BorrowIn' type = 'text'>
-								<button class='btn btn-success' name='Borrowing'><span class='glyphicon glyphicon-shopping-cart'></span> Search</button>
+								<button class='btn btn-success' name='Borrowing'><span class='glyphicon glyphicon-shopping-cart'></span> Shop</button>
 
 							</div>
 						</form>
