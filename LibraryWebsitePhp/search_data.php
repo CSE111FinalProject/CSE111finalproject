@@ -16,7 +16,7 @@
         $db->enableExceptions(true);
         
         //PLEASE KEEP THIS TEMPLATE to add more if condition
-        if($searchBook && $searchCity && !$searchState){
+        if($searchBook && $searchCity && !$searchState && !$searchLibrary && !$movieSearch){
             //fetch book based on city location
             //We can just use if statements or create another file for each functionality and code include('file directory')
             
@@ -151,37 +151,15 @@
         }
         
         else{
-            //search book by all option
-            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "City","library", "Libbooks" WHERE "city_cityid" = "lib_cityid" AND "lib_libid" = "libbooks_libid"');
-            
-            $db->exec('BEGIN');
-            // $statement = $db->prepare('SELECT * FROM "cardholder"');
-            $statement = $db->prepare('SELECT * FROM "state"');
-            $result = $statement->execute() or die("Failed to fetch row!");
-            
-            $db->exec('COMMIT');
+           
             // $pages = new Paginator;
             //table mutation based on the query. In php, you can use echo to make html be able to be used inside the profile.php instead of being kept permanent in html (no if statement in html)      
             echo"<table class='table table-bordered'>";     
             echo"<thead class='alert-info'>";
-            // echo"<col width='10px' />";
-            // echo"<col width='30px' />";
-            // echo"<col width='30px' />";
-            // echo"<col width='40px' />";
-            // echo"<col width='30px' />";
-            // echo"<col width='30px' />";
-            // echo"<col width='30px' />";
-            // echo"<col width='30px' />";
-				echo"<tr>";
-				    echo"<th>State Name</th>";
-					echo"<th>State Comment</th>";
-					
-					//add more columns if needed or change column need
-				echo"</tr>";
+            
 			echo"</thead>";
-            while($fetch=$result->fetchArray()){
-                echo"<tr><td>".$fetch['s_name']."</td><td>".$fetch['s_comment']."</td></tr>";
-            }
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
             echo"</table>";
         }
         $db->close();

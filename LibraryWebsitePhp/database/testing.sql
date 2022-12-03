@@ -24,3 +24,4 @@
 
 -- INSERT INTO "pastLoans" ("pl_loanid","pl_cardid","pl_loandate", "pl_loanstatus","pl_loanlength", "pl_fees","pl_feestatus","pl_comment") VALUES (1,2,3,4,5,6,7,8);
 
+SELECT l_loanid , l_cardid, l_loandate, l_loanstatus, l_loanlength, l_fees, l_feestatus,l_comment, lb_bookid, lb_libraryid, lb_id FROM loans, cardholder, Loanbooks WHERE lb_loanid = l_loanid AND l_cardid = c_cardid AND c_username= "demo96";
