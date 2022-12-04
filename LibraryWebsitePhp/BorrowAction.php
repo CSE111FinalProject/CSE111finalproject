@@ -25,6 +25,13 @@
             $result = $statement->execute();
             list($userid) = $result->fetchArray(PDO::FETCH_NUM);
             // echo $userid;
+            $statement = $db->prepare('SELECT "libmovies_movieid", "libmovies_libid" FROM "Libmovies" WHERE "libmovies_id" = ?');
+            $statement->bindValue(1,$materialid);
+            $result = $statement->execute();
+            list($movieid, $libraryid) = $result->fetchArray(PDO::FETCH_NUM);
+            if(!$movieid){
+                header("Location: profile.php");
+            }
             $statement = $db->prepare('INSERT INTO "loans" ("l_cardid","l_loandate", "l_loanstatus","l_loanlength","l_fees", "l_feestatus","l_comment") VALUES (?,?,?,?,?,?,?)');
             $statement->bindValue(1,$userid);
             $statement->bindValue(2,date("m/d/Y"));
@@ -39,11 +46,7 @@
             $result = $statement->execute();
             list($loanid) = $result->fetchArray(PDO::FETCH_NUM);
 
-            $statement = $db->prepare('SELECT "libmovies_movieid", "libmovies_libid" FROM "Libmovies" WHERE "libmovies_id" = ?');
-            $statement->bindValue(1,$materialid);
-            $result = $statement->execute();
-            list($movieid, $libraryid) = $result->fetchArray(PDO::FETCH_NUM);
-
+            
             $statement = $db->prepare('DELETE FROM "Libmovies" WHERE "libmovies_id" = ?');
             $statement->bindValue(1,$materialid);
             $statement->execute()->finalize();
@@ -64,6 +67,15 @@
             $result = $statement->execute();
             list($userid) = $result->fetchArray(PDO::FETCH_NUM);
             // echo $userid;
+
+            $statement = $db->prepare('SELECT "libbooks_bookid", "libbooks_libid" FROM "Libbooks" WHERE "libbooks_id" = ?');
+            $statement->bindValue(1,$materialid);
+            $result = $statement->execute();
+            list($bookid, $libraryid) = $result->fetchArray(PDO::FETCH_NUM);
+            if(!$bookid){
+                header("Location: profile.php");
+            }
+            
             $statement = $db->prepare('INSERT INTO "loans" ("l_cardid","l_loandate", "l_loanstatus","l_loanlength","l_fees", "l_feestatus","l_comment") VALUES (?,?,?,?,?,?,?)');
             $statement->bindValue(1,$userid);
             $statement->bindValue(2,date("m/d/Y"));
@@ -78,11 +90,7 @@
             $result = $statement->execute();
             list($loanid) = $result->fetchArray(PDO::FETCH_NUM);
 
-            $statement = $db->prepare('SELECT "libbooks_bookid", "libbooks_libid" FROM "Libbooks" WHERE "libbooks_id" = ?');
-            $statement->bindValue(1,$materialid);
-            $result = $statement->execute();
-            list($bookid, $libraryid) = $result->fetchArray(PDO::FETCH_NUM);
-
+            
             $statement = $db->prepare('DELETE FROM "Libbooks" WHERE "libbooks_id" = ?');
             $statement->bindValue(1,$materialid);
             $statement->execute()->finalize();
