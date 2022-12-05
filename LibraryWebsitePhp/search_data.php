@@ -155,12 +155,30 @@
             echo"</table>";
         
         }else if($movieSearch && !$searchBook && $searchCity && !$searchLibrary && !$searchState && !$isbnSearch){ //search for movie and city
+
+            $db->exec('BEGIN');
+            $search = "%" .$movieSearch."%";
+            $search1 = "%" .$searchCity."%";
+            $statement = $db->prepare('SELECT * FROM "Libmovies", "library","movies","City" WHERE "libmovies_libid" = "lib_libid" AND "libmovies_movieid" = "m_movieid" AND "lib_cityid" = "city_cityid"and "m_title" LIKE ?  AND "city_name" LIKE ?');
+            $statement->bindValue(1, $search);
+            $statement->bindValue(2, $search1);
+            $result = $statement->execute() or die("Failed to fetch row!");
+            $db->exec('COMMIT');
             echo"<table class='table table-bordered'>";     
             echo"<thead class='alert-info'>";
-            
-			echo"</thead>";
-            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
-            
+            echo"<tr>";
+                    echo"<th>Borrow Id</th>";
+                    echo"<th>Movie Title</th>";
+                    echo"<th>Movie Published</th>";
+                    echo"<th>Library Name</th>";
+                    echo"<th>Library City Location</th>";
+                    //add more columns if needed or change column need
+                echo"</tr>";
+                echo"</thead>";
+                // echo"Hello";
+            while($fetch=$result->fetchArray()){
+                echo"<tr><td>".$fetch['libmovies_id']."</td><td>".$fetch['m_title']."</td><td>".$fetch['m_year']."</td><td>".$fetch['lib_name']."</td><td>".$fetch['city_name']."</td></tr>";
+            }
             echo"</table>";
         }
         else if($movieSearch && !$searchBook && !$searchCity && $searchLibrary && !$searchState && !$isbnSearch){ //search for movie and library
