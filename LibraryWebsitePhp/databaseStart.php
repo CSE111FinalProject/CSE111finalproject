@@ -24,7 +24,7 @@
         
 
         $query="CREATE TABLE IF NOT EXISTS `books`('b_bookid' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        'b_isbn' TEXT NOT NULL, 'b_title' TEXT NOT NULL,'b_year' INTEGER NOT NULL, 'b_genre' TEXT NOT NULL, 'b_condition' TEXT NOT NULL,'b_author' TEXT NOT NULL,  'b_comment' TEXT NOT NULL )";
+        'b_isbn13' CHAR(15) NOT NULL, 'b_title' TEXT NOT NULL,'b_year' INTEGER NOT NULL, 'b_genre' TEXT NOT NULL, 'b_condition' TEXT NOT NULL,'b_author' TEXT NOT NULL, 'b_isbn10' CHAR(15) NOT NULL, 'b_comment' TEXT NOT NULL )";
         $db->exec($query)or die("Failed to create table! ");
         
         

@@ -53,17 +53,17 @@
             $db->exec('BEGIN');
             $search1 = "%" .$searchBook."%";
             $search2 = "%" .$searchLibrary."%";
-            $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name" FROM "Libbooks", "library","books" WHERE "b_bookid" = "libbooks_bookid" AND "libbooks_libid" = "lib_libid" AND "lib_name" LIKE ?');
+            $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name","city_name" FROM "Libbooks", "library","books","City" WHERE "b_bookid" = "libbooks_bookid" AND "libbooks_libid" = "lib_libid" AND "lib_cityid" = "city_cityid" AND "lib_name" LIKE ?');
             $statement->bindValue(1,$search2);
             $result = $statement->execute() or die("Failed to fetch row");
             $db->exec('COMMIT');
             $db->exec('BEGIN');//Movies
-            $statement1 = $db->prepare('SELECT "libmovies_id","m_title","m_year","lib_name" FROM "movies","library","Libmovies" WHERE "m_movieid" = "libmovies_movieid"  AND "libmovies_libid" = "lib_libid" AND "lib_name" LIKE ?');
+            $statement1 = $db->prepare('SELECT "libmovies_id","m_title","m_year","lib_name","city_name" FROM "movies","library","Libmovies","City" WHERE "m_movieid" = "libmovies_movieid"  AND "libmovies_libid" = "lib_libid" AND "lib_cityid" = "city_cityid" AND "lib_name" LIKE ?');
             $statement1->bindValue(1, $search2);
             $result1 = $statement1->execute() or die("Failed to fetch row");
             $db->exec('COMMIT');
-            list($id,$material,$Year,$Libname) = $result->fetchArray(PDO::FETCH_NUM);
-			list($id1,$material1,$Year1,$Libname1) = $result1->fetchArray(PDO::FETCH_NUM);
+            list($id,$material,$Year,$Libname,$libcity) = $result->fetchArray(PDO::FETCH_NUM);
+			list($id1,$material1,$Year1,$Libname1,$libcity1) = $result1->fetchArray(PDO::FETCH_NUM);
             // echo"";
             //table mutation based on the query. In php, you can use echo to make html be able to be used inside the profile.php instead of being kept permanent in html (no if statement in html)
             echo"<table class='table table-bordered'>";
@@ -74,6 +74,7 @@
                     echo"<th>Book Title</th>";
                     echo"<th>Material Published</th>";
                     echo"<th>Library Name</th>";
+                    echo"<th>Library City Location</th>";
 					//add more columns if needed or change column need
 				echo"</tr>";
 			echo"</thead>";
@@ -81,9 +82,9 @@
             
              if($material){
 
-                echo"<tr><td>".$id."</td><td>".$material."</td><td>".$Year."</td><td>".$Libname."</td></tr>";
+                echo"<tr><td>".$id."</td><td>".$material."</td><td>".$Year."</td><td>".$Libname."</td><td>".$libcity."</td></tr>";
                 while($fetch=$result->fetchArray()){
-                    echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td></tr>";
+                    echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td><td>".$fetch['city_name']."</td></tr>";
                 }
             }
             echo"</table>";
@@ -95,14 +96,15 @@
                     echo"<th>Movie Title</th>";
                     echo"<th>Material Published</th>";
                     echo"<th>Library Name</th>";
+                    echo"<th>Library City Location</th>";
 					//add more columns if needed or change column need
 				echo"</tr>";
 			echo"</thead>";
             if($material1){
                 
-                echo"<tr><td>".$id1."</td><td>".$material1."</td><td>".$Year1."</td><td>".$Libname1."</td></tr>";
+                echo"<tr><td>".$id1."</td><td>".$material1."</td><td>".$Year1."</td><td>".$Libname1."</td><td>".$libcity1."</td></tr>";
                 while($fetch=$result1->fetchArray()){
-                    echo"<tr><td>".$fetch['libmovies_id']."</td><td>".$fetch['m_title']."</td><td>".$fetch['m_year']."</td><td>".$fetch['lib_name']."</td></tr>";
+                    echo"<tr><td>".$fetch['libmovies_id']."</td><td>".$fetch['m_title']."</td><td>".$fetch['m_year']."</td><td>".$fetch['lib_name']."</td><td>".$fetch['city_name']."</td></tr>";
                 }
             }
              echo"</table>";
@@ -198,12 +200,28 @@
             echo"</table>";
         }
         else if(!$movieSearch && !$searchBook && !$searchCity && !$searchLibrary && !$searchState && $isbnSearch){ //search for isbn
+            $db->exec('BEGIN');
+            $search = "%" .$isbnSearch."%";
+            $statement = $db->prepare('SELECT "libbooks_id","b_isbn13","b_isbn10","b_title","b_year","lib_name" FROM "Libbooks", "library","books" WHERE "libbooks_libid" = "lib_libid" AND "libbooks_bookid" = "b_bookid" and "b_isbn13" LIKE ?');
+            $statement->bindValue(1, $search);
+            // $statement->bindValue(2, $search);
+            $result = $statement->execute() or die("Failed to fetch row!");
+            $db->exec('COMMIT');
             echo"<table class='table table-bordered'>";     
             echo"<thead class='alert-info'>";
-            
-			echo"</thead>";
-            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
-            
+            echo"<tr>";
+				    echo"<th>Borrow Id</th>";
+					echo"<th>Book Title</th>";
+					echo"<th>Book ISBN</th>";
+                    echo"<th>Book Published</th>";
+                    echo"<th>Library Name</th>";
+					//add more columns if needed or change column need
+				echo"</tr>";
+                echo"</thead>";
+                // echo"Hello";
+            while($fetch=$result->fetchArray()){
+                echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_isbn13']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td></tr>";
+            }
             echo"</table>";
         }
         else{ 
