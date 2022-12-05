@@ -173,7 +173,7 @@ include('accessDatabase.php');
 							<input id = 'search' name = 'movieSearch' type = 'text'>
 						</div>
 						<div class ='form-group'>
-							<label>Isbn Code: </label>
+							<label>Isbn 13 Code: </label>
 							<input id = 'search' name = 'isbnSearch' type = 'text'>
 						</div>
 						<div class ='form-group'>
