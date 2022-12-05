@@ -16,7 +16,7 @@
         $db->enableExceptions(true);
         
         //PLEASE KEEP THIS TEMPLATE to add more if condition
-        if($searchBook && $searchCity && !$searchState && !$searchLibrary && !$movieSearch){
+        if($searchBook && $searchCity && !$searchState && !$searchLibrary && !$movieSearch && !$isbnSearch){ //search for book and city
             //fetch book based on city location
             //We can just use if statements or create another file for each functionality and code include('file directory')
             
@@ -33,18 +33,18 @@
 				echo"<tr>";
 					echo"<th>Book Title</th>";
 					echo"<th>City</th>";
-					echo"<th>Library Name</th>";
-                    echo"<th>Library Address</th>";
-                    echo"<th>Library Phone</th>";
+					// echo"<th>Library Name</th>";
+                    // echo"<th>Library Address</th>";
+                    // echo"<th>Library Phone</th>";
 					//add more columns if needed or change column need
 				echo"</tr>";
 			echo"</thead>";
             while($fetch=$result->fetchArray()){
-                echo"<tr><td>".$fetch['b_title']."</td><td>".$fetch['city_name']."</td><td>".$fetch['lib_name']."</td><td>".$fetch['lib_address']."</td><td>".$fetch['lib_phone']."</td></tr>";
+                echo"<tr><td>".$fetch['c_username']."</td><td>".$fetch['c_cardid']."</td></tr>";
              }
              echo"</table>";
         }
-        else if(!$searchBook && $searchLibrary && !$searchCity && !$searchState && !$movieSearch){
+        else if(!$searchBook && $searchLibrary && !$searchCity && !$searchState && !$movieSearch && !$isbnSearch){ //search for library
             //search book by library
             $db->exec('BEGIN');
             $search1 = "%" .$searchBook."%";
@@ -102,7 +102,7 @@
                 }
             }
              echo"</table>";
-        }else if($searchBook && !$searchCity && !$searchLibrary && !$searchState && !$movieSearch){
+        }else if($searchBook && !$searchCity && !$searchLibrary && !$searchState && !$movieSearch && !$isbnSearch){ //search for books
             
             $db->exec('BEGIN');
             $search = "%" .$searchBook."%";
@@ -125,7 +125,7 @@
                 echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td></tr>";
             }
             echo"</table>";
-        }else if($movieSearch && !$searchBook && !$searchCity && !$searchLibrary && !$searchState){
+        }else if($movieSearch && !$searchBook && !$searchCity && !$searchLibrary && !$searchState && !$isbnSearch){ //search for movies
             $db->exec('BEGIN');
             $search = "%" .$movieSearch."%";
             $statement = $db->prepare('SELECT * FROM "Libmovies", "library","movies" WHERE "libmovies_libid" = "lib_libid" AND "libmovies_movieid" = "m_movieid" and "m_title" LIKE ?');
@@ -148,9 +148,61 @@
             }
             echo"</table>";
         
+        }else if($movieSearch && !$searchBook && $searchCity && !$searchLibrary && !$searchState && !$isbnSearch){ //search for movie and city
+            echo"<table class='table table-bordered'>";     
+            echo"<thead class='alert-info'>";
+            
+			echo"</thead>";
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
+            echo"</table>";
         }
-        
-        else{
+        else if($movieSearch && !$searchBook && !$searchCity && $searchLibrary && !$searchState && !$isbnSearch){ //search for movie and library
+            echo"<table class='table table-bordered'>";     
+            echo"<thead class='alert-info'>";
+            
+			echo"</thead>";
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
+            echo"</table>";
+        }
+        else if(!$movieSearch && $searchBook && !$searchCity && $searchLibrary && !$searchState && !$isbnSearch){ //search for book and library
+            echo"<table class='table table-bordered'>";     
+            echo"<thead class='alert-info'>";
+            
+			echo"</thead>";
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
+            echo"</table>";
+        }
+        else if($movieSearch && !$searchBook && !$searchCity && !$searchLibrary && $searchState && !$isbnSearch){ //search for Movie and State
+            echo"<table class='table table-bordered'>";     
+            echo"<thead class='alert-info'>";
+            
+			echo"</thead>";
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
+            echo"</table>";
+        }
+        else if(!$movieSearch && $searchBook && !$searchCity && !$searchLibrary && $searchState && !$isbnSearch){ //search for Book and State
+            echo"<table class='table table-bordered'>";     
+            echo"<thead class='alert-info'>";
+            
+			echo"</thead>";
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
+            echo"</table>";
+        }
+        else if(!$movieSearch && !$searchBook && !$searchCity && !$searchLibrary && !$searchState && $isbnSearch){ //search for isbn
+            echo"<table class='table table-bordered'>";     
+            echo"<thead class='alert-info'>";
+            
+			echo"</thead>";
+            echo"<tr><td>"."No Result"."</td><td>"."</td></tr>";
+            
+            echo"</table>";
+        }
+        else{ 
            
             // $pages = new Paginator;
             //table mutation based on the query. In php, you can use echo to make html be able to be used inside the profile.php instead of being kept permanent in html (no if statement in html)      
