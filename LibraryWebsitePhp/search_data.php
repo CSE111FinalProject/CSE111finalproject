@@ -21,26 +21,30 @@
             //We can just use if statements or create another file for each functionality and code include('file directory')
             
             $db->exec('BEGIN');
-            $statement = $db->prepare('SELECT * FROM "cardholder"');
-            // $statement = $db->prepare('SELECT "b_title", "city_name","lib_name", "lib_address","lib_phone" FROM "City","library","Libbooks","books" WHERE "city_name" = ? AND "city_cityid" = "lib_cityid" AND "lib_libid" = "libbooks_libid" AND "libbooks_bookid" ="b_bookid" AND "b_title" LIKE "%".?."%"');
-            // $statement->bindValue(1, $searchCity);
-            // $statement->bindValue(1, $searchBook);
+            $search1 = "%" .$searchBook."%";
+            $search2 = "%" .$searchCity."%";
+            $statement = $db->prepare('SELECT "libbooks_id","b_title","b_year","lib_name","city_name" FROM "Libbooks", "library","books","City" WHERE "b_bookid" = "libbooks_bookid" AND "libbooks_libid" = "lib_libid" AND "lib_cityid" = "city_cityid" AND "city_name" LIKE ? AND "b_title" LIKE ?');
+            $statement->bindValue(1,$search2);
+            $statement->bindValue(2,$search1);
+            
+
+            
             $result = $statement->execute() or die("Failed to fetch row!");
             $db->exec('COMMIT');
             //table mutation based on the query. In php, you can use echo to make html be able to be used inside the profile.php instead of being kept permanent in html (no if statement in html)
             echo"<table class='table table-bordered'>";
             echo"<thead class='alert-info'>";
 				echo"<tr>";
+                    echo"<th>Book Id</th>";
 					echo"<th>Book Title</th>";
-					echo"<th>City</th>";
-					// echo"<th>Library Name</th>";
-                    // echo"<th>Library Address</th>";
-                    // echo"<th>Library Phone</th>";
-					//add more columns if needed or change column need
+                    echo"<th>Book Year</th>";
+					echo"<th>Library Name</th>";
+                    echo"<th>Library City Location</th>";
+					
 				echo"</tr>";
 			echo"</thead>";
             while($fetch=$result->fetchArray()){
-                echo"<tr><td>".$fetch['c_username']."</td><td>".$fetch['c_cardid']."</td></tr>";
+                echo"<tr><td>".$fetch['libbooks_id']."</td><td>".$fetch['b_title']."</td><td>".$fetch['b_year']."</td><td>".$fetch['lib_name']."</td><td>".$fetch['city_name']."</td></tr>";
              }
              echo"</table>";
         }
