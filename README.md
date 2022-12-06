@@ -75,6 +75,6 @@ extension=xsl
 
 date.timezone ="UTC"
 
-To run a development text server, run the following command: php -S localhost:80 -t .
+To run a development test server, run the following command: php -S localhost:80 -t .
 
 In the web browser, enter localhost/index.php
