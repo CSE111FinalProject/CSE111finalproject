@@ -148,7 +148,7 @@ include('accessDatabase.php');
 			
 			<div class='col-md'></div>
 			<div class='col-md-6 well'>
-				<h3 class='text-primary'>User Input</h3>
+				<h3 class='text-primary'>User Input - Enter * for all material</h3>
 				
 				<!-- TABLE CONSTRUCTION -->
 				<hr style='border-top:1px dotted #ccc;'/>
